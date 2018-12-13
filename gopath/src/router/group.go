@@ -142,7 +142,7 @@ func group_delete(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	} else {
-		result.Error = errors.New("whick one do you want to delete?")
+		result.Error = errors.New("which one do you want to delete?")
 		Endresp(result, resp)
 		return
 	}
