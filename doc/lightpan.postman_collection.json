@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "7ba00221-b587-46e1-92ce-1be84f664e2d",
+		"name": "lightpan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "用户列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建用户",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"timeloveboy\",\n\t\"name\":\"李鹏\",\n\t\"password\":\"000666\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:30000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除用户",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:30000/user?id=timeloveboy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "timeloveboy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登录",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"timeloveboy\",\n\t\"password\":\"abc014916\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建群组",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"light4d\",\n\t\"name\":\"light4d\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:30000/group",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "群组列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/group",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除群组",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:30000/group?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改群组",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"light4d\",\n\t\"face\":\"2.jpg\",\n\t\"id\":\"234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:30000/group?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改群组管理员",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"owner\":\"bilinger\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:30000/group/setowner?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group",
+						"setowner"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查看用户加入的群组",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"owner\":\"bilinger\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/group/user?user=bilinger",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"group",
+						"user"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "bilinger"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加群组成员",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"bilinger\"]"
+				},
+				"url": {
+					"raw": "http://localhost:30000/group/user?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group",
+						"user"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "重置群组成员",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"bilinger\"]"
+				},
+				"url": {
+					"raw": "http://localhost:30000/group/user?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group",
+						"user"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除群组成员",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"bilinger\"]"
+				},
+				"url": {
+					"raw": "http://localhost:30000/group/user?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30000",
+					"path": [
+						"group",
+						"user"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查看群组加入的用户",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"owner\":\"bilinger\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/group/user?id=light4d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"group",
+						"user"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "light4d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-	log.Setlogfile("opengw.log")
+	log.Setlogfile("lightpan.log")
 	log.Info(log.Fields{"app": "exec args", "args": os.Args})
 
 	defer func() {
