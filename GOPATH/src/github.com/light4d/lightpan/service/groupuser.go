@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gobestsdk/gobase/log"
+	"github.com/light4d/lightpan/common/server"
 	lm "github.com/light4d/lightpan/model"
 	"github.com/light4d/object4d/dao"
 	"github.com/light4d/object4d/model"
@@ -17,7 +18,7 @@ func SearchGroupuser(filter map[string]interface{}) (result []lm.Groupuser, err 
 		"filter": filter,
 	})
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Table("groupuser").Find(&result, filter).Error
 	if err != nil {
 		log.Warn(log.Fields{
@@ -42,7 +43,7 @@ func GetGroupuser(group string) (result []lm.User, err error) {
 		"filter": group,
 	})
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 
 	db.Raw("SELECT user.id,user.name,user.face,user  FROM user,groupuser WHERE groupuser.id= ? and groupuser.user=user.id and user.type='' ", group).Scan(&result)
 	if err != nil {
@@ -67,7 +68,7 @@ func GetUsergroup(user string) (result []lm.Group, err error) {
 		"filter": user,
 	})
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 
 	db.Raw("SELECT user.id,user.name,user.face,user.parent,user.registetime FROM user,groupuser WHERE groupuser.user= ? and groupuser.user=? and user.type= 'group' ", user, user).Scan(&result)
 	if err != nil {
@@ -107,7 +108,7 @@ func AddGroupusers(who, group string, us []string) (err error) {
 			return model.NewErrData("user not exist", u)
 		}
 	}
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 
 	for _, u := range us {
 		if err = db.Table("groupuser").Create(&lm.Groupuser{
@@ -144,7 +145,7 @@ func DeleteGroupusers(who, group string, us []string) (err error) {
 			return model.NewErrData("user not exist", u)
 		}
 	}
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 
 	if err = db.Table("groupuser").Delete(&lm.Groupuser{}).Where("user in (" + strings.Join(us, ",") + ")").Error; err != nil {
 		log.Warn(log.Fields{
@@ -175,7 +176,7 @@ func ResetGroupusers(who, group string, us []string) (err error) {
 			return model.NewErrData("user not exist", u)
 		}
 	}
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 
 	if err = db.Table("groupuser").Delete(lm.Groupuser{}, map[string]interface{}{}).Error; err != nil {
 		log.Warn(log.Fields{

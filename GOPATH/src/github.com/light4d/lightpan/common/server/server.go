@@ -2,8 +2,6 @@ package server
 
 import (
 	"github.com/gobestsdk/gobase/httpserver"
-
-	"github.com/light4d/lightpan/common/config"
 )
 
 var (
@@ -14,9 +12,9 @@ var (
 
 func Run() {
 
-	M.SetPort(config.APPConfig.HttpPort)
-	F.SetPort(config.APPConfig.FsPort)
-	O.SetPort(config.APPConfig.Object4dPort)
+	M.SetPort(APPConfig.HttpPort)
+	F.SetPort(APPConfig.FsPort)
+	O.SetPort(APPConfig.Object4dPort)
 	go M.Run()
 	go O.Run()
 	F.Run()

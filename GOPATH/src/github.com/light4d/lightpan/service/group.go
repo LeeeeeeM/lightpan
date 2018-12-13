@@ -7,6 +7,7 @@ import (
 	"github.com/light4d/object4d/model"
 
 	"errors"
+	"github.com/light4d/lightpan/common/server"
 	"regexp"
 	"time"
 )
@@ -60,7 +61,7 @@ func SetOwner(who, newowner, groupid string) (err error) {
 		return model.ErrLenBigThan1
 	}
 
-	err = dao.DB().Where(filter).Table("user").Model(new(lm.Group)).Update(
+	err = dao.DB(server.APPConfig.Mysql).Where(filter).Table("user").Model(new(lm.Group)).Update(
 		map[string]interface{}{
 			"parent": newowner,
 		}).Error
@@ -92,7 +93,7 @@ func CreateGroup(parend string, group lm.Group) (groupid string, err error) {
 	}
 	group.Type = "group"
 	group.Parent = parend
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Table("user").Create(&group).Error
 	if err != nil {
 		log.Warn(log.Fields{
@@ -165,7 +166,7 @@ func SearchGroup(filter map[string]interface{}) (result []lm.Group, err error) {
 
 	filter["type"] = "group"
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Table("user").Find(&result, filter).Error
 	if err != nil {
 		log.Warn(log.Fields{
@@ -205,7 +206,7 @@ func DeleteGroup(who string, groupid string) (err error) {
 		return errors.New("you no permission set this group")
 	}
 
-	err = dao.DB().Where(filter).Table("user").Delete(&lm.User{}).Error
+	err = dao.DB(server.APPConfig.Mysql).Where(filter).Table("user").Delete(&lm.User{}).Error
 	if err != nil {
 		log.Warn(log.Fields{
 			"Model.Delete": g,
@@ -247,7 +248,7 @@ func UpdateGroup(who, groupid string, updater map[string]interface{}) (err error
 		return errors.New("you no permission set this group")
 	}
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Model(new(lm.Group)).Table("user").Where(filter).Updates(updater).Error
 	if err != nil {
 		log.Warn(log.Fields{

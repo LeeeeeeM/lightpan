@@ -4,6 +4,7 @@ import (
 	"github.com/gobestsdk/gobase/log"
 
 	"errors"
+	"github.com/light4d/lightpan/common/server"
 	lm "github.com/light4d/lightpan/model"
 	"github.com/light4d/object4d/dao"
 	"github.com/light4d/object4d/model"
@@ -44,7 +45,7 @@ func SearchUser(filter map[string]interface{}) (result []lm.User, err error) {
 		"func":   "SearchUsers",
 		"filter": filter,
 	})
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 
 	err = db.Table("user").Find(&result, filter).Error
 	if err != nil {
@@ -79,7 +80,7 @@ func DeleteUser(userid string) (err error) {
 	if !ex {
 		return errors.New("user not found")
 	}
-	err = dao.DB().Where(filter).Table("user").Delete(&lm.User{}).Error
+	err = dao.DB(server.APPConfig.Mysql).Where(filter).Table("user").Delete(&lm.User{}).Error
 	if err != nil {
 		log.Warn(log.Fields{
 			"Model.Delete": u,
@@ -106,7 +107,7 @@ func CreateUser(user lm.User) (userid string, err error) {
 		return "", err
 	}
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Table("user").Create(&user).Error
 	if err != nil {
 		log.Warn(log.Fields{
@@ -154,7 +155,7 @@ func UpdateUser(id string, updater map[string]interface{}) (err error) {
 		return errors.New("user not found")
 	}
 
-	db := dao.DB()
+	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Table("user").Where("id = ?", id).Where("type = ''").Updates(updater).Error
 	if err != nil {
 		log.Warn(log.Fields{
