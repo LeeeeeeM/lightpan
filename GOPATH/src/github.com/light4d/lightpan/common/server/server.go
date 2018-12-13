@@ -5,8 +5,8 @@ import (
 )
 
 var (
-	M = httpserver.New("yourfs")
-	F = httpserver.New("fs")
+	M = httpserver.New("lightpan manager")
+	F = httpserver.New("lightpan file system")
 	O = httpserver.New("ojbect4d")
 )
 

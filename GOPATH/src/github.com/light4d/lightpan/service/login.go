@@ -5,8 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/light4d/object4d/dao"
-
+	"github.com/light4d/lightpan/dao"
 	lm "github.com/light4d/lightpan/model"
 	"io"
 	"strconv"
