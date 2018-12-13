@@ -3,7 +3,7 @@ package server
 import (
 	"github.com/gobestsdk/gobase/httpserver"
 
-	"github.com/light4d/object4d/common/config"
+	"github.com/light4d/lightpan/common/config"
 )
 
 var (
