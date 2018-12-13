@@ -1,14 +1,15 @@
 package router
 
 import (
+	"github.com/light4d/lightpan/service"
 	"github.com/light4d/object4d/model"
-	"github.com/light4d/object4d/service"
 
 	"encoding/json"
 	"errors"
 	"github.com/gobestsdk/gobase/httpserver"
 	"github.com/gobestsdk/gobase/log"
 	"net/http"
+	"strings"
 )
 
 func getuid(req *http.Request) string {
@@ -17,6 +18,13 @@ func getuid(req *http.Request) string {
 		return ""
 	}
 	return service.Checktoken(c.Value)
+}
+func AccessControlAllowMethods() string {
+	var method = []string{
+		http.MethodGet,
+		http.MethodPost,
+	}
+	return strings.Join(method, ",")
 }
 
 func checktoken(resp http.ResponseWriter, req *http.Request) {
@@ -53,7 +61,7 @@ func Endresp(result model.CommonResp, resp http.ResponseWriter) {
 	log.Info(log.Fields{
 		"resp": result,
 	})
-	httpserver.Header(resp)
+	httpserver.Header(resp, "application/json", AccessControlAllowMethods())
 
 	r, _ := json.Marshal(result)
 	resp.Write(r)

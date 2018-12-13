@@ -15,7 +15,7 @@ func file(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		file_delete(resp, req)
 	default:
-		httpserver.Options(req, resp)
+		httpserver.Options(req, resp, "application/octet-stream", AccessControlAllowMethods())
 	}
 }
 

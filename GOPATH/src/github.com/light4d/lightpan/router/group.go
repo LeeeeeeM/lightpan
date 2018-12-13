@@ -5,11 +5,12 @@ import (
 	"errors"
 	"io/ioutil"
 
+	lm "github.com/light4d/lightpan/model"
 	"github.com/light4d/object4d/model"
 	"net/http"
 
 	"github.com/gobestsdk/gobase/httpserver"
-	"github.com/light4d/object4d/service"
+	"github.com/light4d/lightpan/service"
 )
 
 func group(resp http.ResponseWriter, req *http.Request) {
@@ -24,7 +25,7 @@ func group(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		group_delete(resp, req)
 	default:
-		httpserver.Options(req, resp)
+		httpserver.Options(req, resp, "application/json", AccessControlAllowMethods())
 	}
 }
 func group_get(resp http.ResponseWriter, req *http.Request) {
@@ -43,7 +44,7 @@ func group_get(resp http.ResponseWriter, req *http.Request) {
 func group_post(resp http.ResponseWriter, req *http.Request) {
 	result := model.CommonResp{}
 
-	group := model.Group{}
+	group := lm.Group{}
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		result.Code = -1
