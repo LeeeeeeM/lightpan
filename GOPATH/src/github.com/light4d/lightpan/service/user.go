@@ -3,10 +3,10 @@ package service
 import (
 	"github.com/gobestsdk/gobase/log"
 
+	"errors"
+	lm "github.com/light4d/lightpan/model"
 	"github.com/light4d/object4d/dao"
 	"github.com/light4d/object4d/model"
-
-	"errors"
 	"regexp"
 	"time"
 )
@@ -17,20 +17,20 @@ var allowupdateUser = map[string]interface{}{
 	"face":     "",
 }
 
-func checkandfixCreateUser(user *model.User) (err error) {
+func checkandfixCreateUser(user *lm.User) (err error) {
 	//TODO your code
 
 	m, err := regexp.Match("^[a-zA-Z0-9_-]{4,16}$", []byte(user.ID))
 	if user.ID == "" || err != nil || !m {
 		return model.NewErrData("user id error format", user.ID)
 	}
-	user.Password = model.DBPassword(user.Password)
+	user.Password = lm.DBPassword(user.Password)
 	user.Registetime = time.Now()
 
 	return
 }
 
-func CheckUserExist(uid string) (*model.User, bool) {
+func CheckUserExist(uid string) (*lm.User, bool) {
 	us, err := SearchUser(map[string]interface{}{
 		"id": uid,
 	})
@@ -39,7 +39,7 @@ func CheckUserExist(uid string) (*model.User, bool) {
 	}
 	return nil, false
 }
-func SearchUser(filter map[string]interface{}) (result []model.User, err error) {
+func SearchUser(filter map[string]interface{}) (result []lm.User, err error) {
 	log.Info(log.Fields{
 		"func":   "SearchUsers",
 		"filter": filter,
@@ -79,7 +79,7 @@ func DeleteUser(userid string) (err error) {
 	if !ex {
 		return errors.New("user not found")
 	}
-	err = dao.DB().Where(filter).Table("user").Delete(&model.User{}).Error
+	err = dao.DB().Where(filter).Table("user").Delete(&lm.User{}).Error
 	if err != nil {
 		log.Warn(log.Fields{
 			"Model.Delete": u,
@@ -90,7 +90,7 @@ func DeleteUser(userid string) (err error) {
 	return err
 }
 
-func CreateUser(user model.User) (userid string, err error) {
+func CreateUser(user lm.User) (userid string, err error) {
 	log.Info(log.Fields{
 		"func": "CreateUser",
 		"user": user,

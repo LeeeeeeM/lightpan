@@ -6,7 +6,8 @@ import (
 	"fmt"
 
 	"github.com/light4d/object4d/dao"
-	"github.com/light4d/object4d/model"
+
+	lm "github.com/light4d/lightpan/model"
 	"io"
 	"strconv"
 	"time"
@@ -18,7 +19,7 @@ func Login(userid, password string) (string, error) {
 		return "", errors.New("user not found")
 	}
 
-	if (existuser.Password) != model.DBPassword(password) {
+	if (existuser.Password) != lm.DBPassword(password) {
 		return "", errors.New("用户名密码错误")
 	}
 

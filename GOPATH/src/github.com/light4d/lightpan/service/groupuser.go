@@ -4,13 +4,14 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gobestsdk/gobase/log"
+	lm "github.com/light4d/lightpan/model"
 	"github.com/light4d/object4d/dao"
 	"github.com/light4d/object4d/model"
 	"strings"
 	"time"
 )
 
-func SearchGroupuser(filter map[string]interface{}) (result []model.Groupuser, err error) {
+func SearchGroupuser(filter map[string]interface{}) (result []lm.Groupuser, err error) {
 	log.Info(log.Fields{
 		"func":   "SearchGroupuser",
 		"filter": filter,
@@ -35,7 +36,7 @@ func SearchGroupuser(filter map[string]interface{}) (result []model.Groupuser, e
 	return
 
 }
-func GetGroupuser(group string) (result []model.User, err error) {
+func GetGroupuser(group string) (result []lm.User, err error) {
 	log.Info(log.Fields{
 		"func":   "GetGroupuser",
 		"filter": group,
@@ -60,7 +61,7 @@ func GetGroupuser(group string) (result []model.User, err error) {
 	})
 	return
 }
-func GetUsergroup(user string) (result []model.Group, err error) {
+func GetUsergroup(user string) (result []lm.Group, err error) {
 	log.Info(log.Fields{
 		"func":   "GetUsergroup",
 		"filter": user,
@@ -109,7 +110,7 @@ func AddGroupusers(who, group string, us []string) (err error) {
 	db := dao.DB()
 
 	for _, u := range us {
-		if err = db.Table("groupuser").Create(&model.Groupuser{
+		if err = db.Table("groupuser").Create(&lm.Groupuser{
 			ID:       group,
 			User:     u,
 			Jointime: time.Now(),
@@ -145,7 +146,7 @@ func DeleteGroupusers(who, group string, us []string) (err error) {
 	}
 	db := dao.DB()
 
-	if err = db.Table("groupuser").Delete(&model.Groupuser{}).Where("user in (" + strings.Join(us, ",") + ")").Error; err != nil {
+	if err = db.Table("groupuser").Delete(&lm.Groupuser{}).Where("user in (" + strings.Join(us, ",") + ")").Error; err != nil {
 		log.Warn(log.Fields{
 			"groupuser":       group,
 			"CreateGroupuser": "DB",
@@ -176,7 +177,7 @@ func ResetGroupusers(who, group string, us []string) (err error) {
 	}
 	db := dao.DB()
 
-	if err = db.Table("groupuser").Delete(model.Groupuser{}, map[string]interface{}{}).Error; err != nil {
+	if err = db.Table("groupuser").Delete(lm.Groupuser{}, map[string]interface{}{}).Error; err != nil {
 		log.Warn(log.Fields{
 			"groupuser":       group,
 			"CreateGroupuser": "DB",
@@ -186,7 +187,7 @@ func ResetGroupusers(who, group string, us []string) (err error) {
 		return err
 	}
 	for _, u := range us {
-		if err = db.Table("groupuser").Create(&model.Groupuser{
+		if err = db.Table("groupuser").Create(&lm.Groupuser{
 			ID:       group,
 			User:     u,
 			Jointime: time.Now(),

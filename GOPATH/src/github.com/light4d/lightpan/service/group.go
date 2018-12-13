@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/gobestsdk/gobase/log"
+	lm "github.com/light4d/lightpan/model"
 	"github.com/light4d/object4d/dao"
 	"github.com/light4d/object4d/model"
 
@@ -10,7 +11,7 @@ import (
 	"time"
 )
 
-func checkandfixCreateGroup(user *model.Group) (err error) {
+func checkandfixCreateGroup(user *lm.Group) (err error) {
 	//TODO your code
 	m, err := regexp.Match("^[a-zA-Z0-9_-]{4,16}$", []byte(user.ID))
 	if user.ID == "" || err != nil || !m {
@@ -59,7 +60,7 @@ func SetOwner(who, newowner, groupid string) (err error) {
 		return model.ErrLenBigThan1
 	}
 
-	err = dao.DB().Where(filter).Table("user").Model(new(model.Group)).Update(
+	err = dao.DB().Where(filter).Table("user").Model(new(lm.Group)).Update(
 		map[string]interface{}{
 			"parent": newowner,
 		}).Error
@@ -73,7 +74,7 @@ func SetOwner(who, newowner, groupid string) (err error) {
 	return
 }
 
-func CreateGroup(parend string, group model.Group) (groupid string, err error) {
+func CreateGroup(parend string, group lm.Group) (groupid string, err error) {
 	log.Info(log.Fields{
 		"func": "CreateUser",
 		"user": group,
@@ -114,7 +115,7 @@ func CreateGroup(parend string, group model.Group) (groupid string, err error) {
 		return "", model.ErrLenBigThan1
 	}
 
-	groupuser := &model.Groupuser{
+	groupuser := &lm.Groupuser{
 		ID:       group.ID,
 		User:     parend,
 		Jointime: time.Now(),
@@ -149,14 +150,14 @@ func CreateGroup(parend string, group model.Group) (groupid string, err error) {
 	})
 	return
 }
-func CheckGroupExist(group string) (*model.Group, bool) {
+func CheckGroupExist(group string) (*lm.Group, bool) {
 	gs, err := SearchGroup(map[string]interface{}{"id": group})
 	if err == nil && len(gs) == 1 {
 		return &(gs[0]), true
 	}
 	return nil, false
 }
-func SearchGroup(filter map[string]interface{}) (result []model.Group, err error) {
+func SearchGroup(filter map[string]interface{}) (result []lm.Group, err error) {
 	log.Info(log.Fields{
 		"func":   "SearchGroup",
 		"filter": filter,
@@ -204,7 +205,7 @@ func DeleteGroup(who string, groupid string) (err error) {
 		return errors.New("you no permission set this group")
 	}
 
-	err = dao.DB().Where(filter).Table("user").Delete(&model.User{}).Error
+	err = dao.DB().Where(filter).Table("user").Delete(&lm.User{}).Error
 	if err != nil {
 		log.Warn(log.Fields{
 			"Model.Delete": g,
@@ -247,7 +248,7 @@ func UpdateGroup(who, groupid string, updater map[string]interface{}) (err error
 	}
 
 	db := dao.DB()
-	err = db.Model(new(model.Group)).Table("user").Where(filter).Updates(updater).Error
+	err = db.Model(new(lm.Group)).Table("user").Where(filter).Updates(updater).Error
 	if err != nil {
 		log.Warn(log.Fields{
 			"func":    "UpdateUser Updates",
