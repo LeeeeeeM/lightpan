@@ -1,21 +1,29 @@
 package model
 
 import (
-	om "github.com/light4d/object4d/model"
+	"github.com/gobestsdk/gobase/utils"
 	"strings"
+	"time"
 )
 
 type File struct {
 	User, Folder, Name string
 }
-type DBFile struct {
-	File
-	Pub bool
-}
 
 type Object4dFile struct {
-	DBFile
-	om.Object4d
+	User, Folder, Name string
+	Pub, Del           bool
+	Version            int
+	Object4d           string
+	Createtime         interface{}
+}
+
+func (u *Object4dFile) FixShow() *Object4dFile {
+	if u.Createtime != nil {
+		u.Createtime = (u.Createtime.(time.Time)).Format(utils.DateTimeFormart)
+	}
+
+	return u
 }
 
 func ParseFile(remoteuri string) (f *File) {

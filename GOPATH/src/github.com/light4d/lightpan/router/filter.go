@@ -14,10 +14,15 @@ import (
 
 func getuid(req *http.Request) string {
 	c, err := req.Cookie("token")
-	if err != nil {
-		return ""
+	if err == nil && c != nil {
+		return service.Checktoken(c.Value)
 	}
-	return service.Checktoken(c.Value)
+
+	t := req.Header.Get("token")
+	if t != "" {
+		return service.Checktoken(t)
+	}
+	return ""
 }
 func AccessControlAllowMethods() string {
 	var method = []string{

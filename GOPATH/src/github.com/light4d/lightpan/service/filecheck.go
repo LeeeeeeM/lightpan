@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/light4d/lightpan/model"
+	om "github.com/light4d/object4d/model"
 
-	"errors"
 	"strconv"
 )
 
@@ -34,6 +34,6 @@ func CheckUrlAccess(uid string, f *model.File) (access bool, f4d *model.Object4d
 		access = true
 		return
 	}
-	err = errors.New("len(groupuser)=" + strconv.Itoa(len(gus)))
+	err = om.NewErr("len(groupuser)=" + strconv.Itoa(len(gus)))
 	return
 }
