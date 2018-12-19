@@ -84,7 +84,7 @@ func group_put(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	updater := make(map[string]interface{})
-	err := httpserver.Unmarshalreqbody(req, &updater)
+	err := httpserver.To(req, &updater)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -113,7 +113,7 @@ func group_setowner(resp http.ResponseWriter, req *http.Request) {
 	updater := struct {
 		Owner string
 	}{}
-	err := httpserver.Unmarshalreqbody(req, &updater)
+	err := httpserver.To(req, &updater)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
