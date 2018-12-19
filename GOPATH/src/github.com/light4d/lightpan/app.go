@@ -1,15 +1,12 @@
 package main
 
 import (
+	"github.com/gobestsdk/gobase/log"
+	"github.com/light4d/lightpan/common/server"
+	"github.com/light4d/lightpan/router"
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/light4d/lightpan/common/server"
-
-	"github.com/gobestsdk/gobase/log"
-
-	"github.com/light4d/lightpan/router"
 )
 
 func main() {
