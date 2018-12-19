@@ -90,6 +90,19 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
+	newobj4d, err := os.GetLocation(req)
+	if err != nil {
+		result = om.CommonResp{
+			Error: err.Error(),
+			Code:  -1,
+		}
+		log.Warn(log.Fields{
+			"error": err.Error(),
+		})
+		Endresp(result, resp)
+		return
+	}
+
 	if f4d == nil {
 		pub := false
 		pub_, _ := query["pub"]
@@ -99,18 +112,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 				pub = pub_.(bool)
 			}
 		}
-		obj4d, err := os.GetLocation(req)
-		if err != nil {
-			result = om.CommonResp{
-				Error: err.Error(),
-				Code:  -1,
-			}
-			log.Warn(log.Fields{
-				"error": err.Error(),
-			})
-			Endresp(result, resp)
-			return
-		}
+
 		f4d = &model.Object4dFile{
 			User:       f.User,
 			Folder:     f.Folder,
@@ -118,8 +120,19 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Pub:        pub,
 			Createtime: time.Now(),
 			Version:    0,
-			Object4d:   obj4d.Url(),
+			Object4d:   newobj4d.Url(),
 		}
+		err = service.NewFileRecord(*f4d)
+		if err != nil {
+			result.Code = -1
+			result.Error = err.Error()
+			Endresp(result, resp)
+			return
+		}
+	} else {
+		f4d.Version += 1
+		f4d.Createtime = time.Now()
+		f4d.Object4d = newobj4d.Url()
 		err = service.NewFileRecord(*f4d)
 		if err != nil {
 			result.Code = -1

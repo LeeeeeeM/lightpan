@@ -8,16 +8,16 @@ import (
 )
 
 func CheckUrlAccess(uid string, f *model.File) (access bool, f4d *model.Object4dFile, err error) {
-	if uid == f.User {
-		access = true
-		return
-	}
+
 	f4d, err = GetFile(*f)
 	if err != nil {
 		return
 	}
-
 	if f4d != nil && f4d.Pub {
+		access = true
+		return
+	}
+	if uid == f.User {
 		access = true
 		return
 	}
