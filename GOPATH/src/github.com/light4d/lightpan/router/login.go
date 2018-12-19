@@ -9,7 +9,8 @@ import (
 	"net/http"
 
 	"github.com/gobestsdk/gobase/httpserver"
-	"github.com/light4d/lightpan/service"
+
+	"github.com/light4d/lightpan/mservice"
 )
 
 func login(resp http.ResponseWriter, req *http.Request) {
@@ -39,7 +40,7 @@ func login_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	t, err := service.Login(m["id"], m["password"])
+	t, err := mservice.Login(m["id"], m["password"])
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()

@@ -1,4 +1,4 @@
-package service
+package mservice
 
 import (
 	"github.com/gobestsdk/gobase/log"

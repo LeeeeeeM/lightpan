@@ -10,7 +10,8 @@ import (
 	"net/http"
 
 	"github.com/gobestsdk/gobase/httpserver"
-	"github.com/light4d/lightpan/service"
+
+	"github.com/light4d/lightpan/mservice"
 )
 
 func group(resp http.ResponseWriter, req *http.Request) {
@@ -32,7 +33,7 @@ func group_get(resp http.ResponseWriter, req *http.Request) {
 	result := model.CommonResp{}
 	filter := httpserver.Getfilter(req)
 
-	gs, err := service.SearchGroup(filter)
+	gs, err := mservice.SearchGroup(filter)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -60,7 +61,7 @@ func group_post(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	uid := getuid(req)
-	groupid, err := service.CreateGroup(uid, group)
+	groupid, err := mservice.CreateGroup(uid, group)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -92,7 +93,7 @@ func group_put(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	uid := getuid(req)
-	err = service.UpdateGroup(uid, id, updater)
+	err = mservice.UpdateGroup(uid, id, updater)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -121,7 +122,7 @@ func group_setowner(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	uid := getuid(req)
-	err = service.SetOwner(uid, updater.Owner, id)
+	err = mservice.SetOwner(uid, updater.Owner, id)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -135,7 +136,7 @@ func group_delete(resp http.ResponseWriter, req *http.Request) {
 	groupid := req.URL.Query().Get("id")
 
 	if groupid != "" {
-		err := service.DeleteGroup(uid, groupid)
+		err := mservice.DeleteGroup(uid, groupid)
 		if err != nil {
 			result.Error = err.Error()
 			result.Code = -1

@@ -1,4 +1,4 @@
-package service
+package mservice
 
 func checkupdate(updater map[string]interface{}, allowupdate map[string]interface{}) (disableupdatefields []string) {
 	disableupdatefields = make([]string, 0)

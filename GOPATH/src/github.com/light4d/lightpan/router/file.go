@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gobestsdk/gobase/httpserver"
 	"github.com/light4d/lightpan/model"
-	"github.com/light4d/lightpan/service"
+
 	om "github.com/light4d/object4d/model"
 	os "github.com/light4d/object4d/service"
 	"net/http"
@@ -13,6 +13,8 @@ import (
 	"github.com/gobestsdk/gobase/log"
 	"io/ioutil"
 	"time"
+
+	"github.com/light4d/lightpan/fservice"
 )
 
 func file(resp http.ResponseWriter, req *http.Request) {
@@ -33,7 +35,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
 	uid := getuid(req)
 	f := model.ParseFile(req.RequestURI)
-	access, f4d, err := service.CheckUrlAccess(uid, f)
+	access, f4d, err := fservice.CheckUrlAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -73,7 +75,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 	query := httpserver.Getfilter(req)
 	f := model.ParseFile(req.RequestURI)
 
-	access, f4d, err := service.CheckUrlAccess(uid, f)
+	access, f4d, err := fservice.CheckUrlAccess(uid, f)
 	log.Info(log.Fields{
 		"access": access,
 		"f4d":    f4d,
@@ -122,7 +124,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Version:    0,
 			Object4d:   newobj4d.Url(),
 		}
-		err = service.NewFileRecord(*f4d)
+		err = fservice.NewFileRecord(*f4d)
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()
@@ -133,7 +135,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		f4d.Version += 1
 		f4d.Createtime = time.Now()
 		f4d.Object4d = newobj4d.Url()
-		err = service.NewFileRecord(*f4d)
+		err = fservice.NewFileRecord(*f4d)
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()

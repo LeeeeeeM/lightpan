@@ -1,9 +1,10 @@
-package service
+package fservice
 
 import (
 	"github.com/light4d/lightpan/model"
 	om "github.com/light4d/object4d/model"
 
+	"github.com/light4d/lightpan/mservice"
 	"strconv"
 )
 
@@ -21,12 +22,12 @@ func CheckUrlAccess(uid string, f *model.File) (access bool, f4d *model.Object4d
 		access = true
 		return
 	}
-	g, b := CheckGroupExist(f.User)
+	g, b := mservice.CheckGroupExist(f.User)
 
 	if !b {
 		return
 	}
-	gus, err := SearchGroupuser(map[string]interface{}{
+	gus, err := mservice.SearchGroupuser(map[string]interface{}{
 		"id":   g.ID,
 		"user": uid,
 	})

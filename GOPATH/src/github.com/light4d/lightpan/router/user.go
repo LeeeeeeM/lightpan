@@ -10,7 +10,8 @@ import (
 	"net/http"
 
 	"github.com/gobestsdk/gobase/httpserver"
-	"github.com/light4d/lightpan/service"
+
+	"github.com/light4d/lightpan/mservice"
 )
 
 func user(resp http.ResponseWriter, req *http.Request) {
@@ -32,7 +33,7 @@ func user_get(resp http.ResponseWriter, req *http.Request) {
 	result := model.CommonResp{}
 	filter := httpserver.Getfilter(req)
 	filter["type"] = ""
-	us, err := service.SearchUser(filter)
+	us, err := mservice.SearchUser(filter)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -60,7 +61,7 @@ func user_post(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	userid, err := service.CreateUser(user)
+	userid, err := mservice.CreateUser(user)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -91,7 +92,7 @@ func user_put(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	err = service.UpdateUser(id, updater)
+	err = mservice.UpdateUser(id, updater)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -104,7 +105,7 @@ func user_delete(resp http.ResponseWriter, req *http.Request) {
 	userid := req.URL.Query().Get("id")
 
 	if userid != "" {
-		err := service.DeleteUser(userid)
+		err := mservice.DeleteUser(userid)
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()

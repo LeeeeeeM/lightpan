@@ -1,4 +1,4 @@
-package service
+package fservice
 
 import (
 	"github.com/light4d/lightpan/model"

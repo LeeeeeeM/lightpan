@@ -1,13 +1,13 @@
 package router
 
 import (
-	"github.com/light4d/lightpan/service"
 	"github.com/light4d/object4d/model"
 
 	"encoding/json"
 	"errors"
 	"github.com/gobestsdk/gobase/httpserver"
 	"github.com/gobestsdk/gobase/log"
+	"github.com/light4d/lightpan/mservice"
 	"net/http"
 	"strings"
 )
@@ -15,12 +15,12 @@ import (
 func getuid(req *http.Request) string {
 	c, err := req.Cookie("token")
 	if err == nil && c != nil {
-		return service.Checktoken(c.Value)
+		return mservice.Checktoken(c.Value)
 	}
 
 	t := req.Header.Get("token")
 	if t != "" {
-		return service.Checktoken(t)
+		return mservice.Checktoken(t)
 	}
 	return ""
 }
@@ -43,7 +43,7 @@ func checktoken(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	if service.Checktoken(c.Value) == "" {
+	if mservice.Checktoken(c.Value) == "" {
 		result.Code = -2
 		result.Error = errors.New("need token")
 		Endresp(result, resp)
