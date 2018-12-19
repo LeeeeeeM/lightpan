@@ -468,6 +468,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "下载",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "76eaa6563b4994add6f1ec46a63caad9"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://127.0.0.1:3001/timeloveboy/fsj/jpg/teamview.conf",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"timeloveboy",
+								"fsj",
+								"jpg",
+								"teamview.conf"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
