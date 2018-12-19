@@ -19,3 +19,15 @@ func GetFile(f model.File) (o4f *model.Object4dFile, err error) {
 	}
 	return
 }
+
+func NewFileRecord(f4d model.Object4dFile) (err error) {
+	db := dao.DB(server.APPConfig.Mysql)
+
+	err = db.Table("file").Create(f4d).Error
+	if err != nil {
+		log.Warn(log.Fields{
+			"sql err": err,
+		})
+	}
+	return
+}

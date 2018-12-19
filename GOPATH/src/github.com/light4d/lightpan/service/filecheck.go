@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func CheckFileAccess(uid string, f *model.File) (access bool, f4d *model.Object4dFile, err error) {
+func CheckUrlAccess(uid string, f *model.File) (access bool, f4d *model.Object4dFile, err error) {
 	if uid == f.User {
 		access = true
 		return
@@ -17,11 +17,11 @@ func CheckFileAccess(uid string, f *model.File) (access bool, f4d *model.Object4
 		return
 	}
 
-	if f4d.Pub {
+	if f4d != nil && f4d.Pub {
 		access = true
 		return
 	}
-	g, b := CheckGroupExist(f4d.User)
+	g, b := CheckGroupExist(f.User)
 
 	if !b {
 		return
