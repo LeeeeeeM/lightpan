@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gobestsdk/gobase/httpserver"
+	"github.com/light4d/lightpan/model"
 	"net/http"
 )
 
@@ -20,8 +21,8 @@ func file(resp http.ResponseWriter, req *http.Request) {
 }
 
 func file_get(resp http.ResponseWriter, req *http.Request) {
-	//uid:=getuid(req)
-
+	uid := getuid(req)
+	f := model.ParseFile(req.RequestURI)
 	//service.GetObject(uid)
 }
 func file_post(resp http.ResponseWriter, req *http.Request) {

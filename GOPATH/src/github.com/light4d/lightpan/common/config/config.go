@@ -13,4 +13,5 @@ type Config struct {
 		Password string `json:"password"`
 		DB       int    `json:"db"`
 	} `json:"redis"`
+	Object4d []string `json:"object4d"`
 }
