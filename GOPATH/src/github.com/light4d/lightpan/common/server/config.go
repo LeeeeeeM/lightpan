@@ -10,7 +10,9 @@ import (
 var (
 	APPConfig config.Config = config.Config{
 		HttpPort: 30000,
+		FsPort:   9002,
 		Mysql:    "",
+		Object4d: {""},
 	}
 )
 
