@@ -1,4 +1,5 @@
 create schema lightpan;
+use lightpan;
 CREATE TABLE `groupuser` (
   `id` varchar(45) NOT NULL,
   `user` varchar(45) NOT NULL,
