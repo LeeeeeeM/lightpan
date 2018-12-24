@@ -27,4 +27,5 @@ CREATE TABLE `file` (
   `object4d` varchar(260) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `yourfs`.`file` ADD COLUMN `contenttype` varchar(100) NOT NULL COMMENT '上传文件contenttype' AFTER `object4d`;
 

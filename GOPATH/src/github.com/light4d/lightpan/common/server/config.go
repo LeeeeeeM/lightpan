@@ -9,10 +9,10 @@ import (
 
 var (
 	APPConfig config.Config = config.Config{
-		HttpPort: 30000,
+		HttpPort: 9003,
 		FsPort:   9002,
 		Mysql:    "",
-		Object4d: {""},
+		Object4d: []string{},
 	}
 )
 
