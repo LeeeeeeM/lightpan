@@ -123,6 +123,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Createtime: time.Now(),
 			Version:    0,
 			Object4d:   newobj4d.Url(),
+			Contenttype: ContentType(f.Name),
 		}
 		err = fservice.NewFileRecord(*f4d)
 		if err != nil {

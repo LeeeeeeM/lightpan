@@ -16,6 +16,7 @@ type Object4dFile struct {
 	Version            int
 	Object4d           string
 	Createtime         interface{}
+	Contenttype        string
 }
 
 func (u *Object4dFile) FixShow() *Object4dFile {
