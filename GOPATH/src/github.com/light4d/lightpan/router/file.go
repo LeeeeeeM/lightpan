@@ -4,6 +4,7 @@ import (
 	"github.com/gobestsdk/gobase/httpserver"
 	"github.com/light4d/lightpan/model"
 
+	oc "github.com/light4d/object4d/common"
 	om "github.com/light4d/object4d/model"
 	os "github.com/light4d/object4d/service"
 	"net/http"
@@ -147,7 +148,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		client := &http.Client{}
 		req, err := http.NewRequest("POST", "http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, req.Body)
 		req.Header.Add("Content-Type", "application/octet-stream")
-		req.Header.Add("fileContentType", ContentType(f.Name))
+		req.Header.Add(oc.Ctype, ContentType(f.Name))
 		redrictresp, err := client.Do(req)
 		defer redrictresp.Body.Close()
 		if err != nil {
@@ -156,7 +157,6 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Endresp(result, resp)
 			return
 		}
-
 
 		//redrictresp, err := http.Post("http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, "application/octet-stream", req.Body)
 		//if err != nil {
