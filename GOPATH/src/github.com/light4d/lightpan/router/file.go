@@ -123,7 +123,6 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Createtime: time.Now(),
 			Version:    0,
 			Object4d:   newobj4d.Url(),
-			Contenttype: ContentType(f.Name),
 		}
 		err = fservice.NewFileRecord(*f4d)
 		if err != nil {
@@ -145,13 +144,27 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 	}
 	{
-		redrictresp, err := http.Post("http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, "application/octet-stream", req.Body)
+		client := &http.Client{}
+		req, err := http.NewRequest("POST", "http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, req.Body)
+		req.Header.Add("Content-Type", "application/octet-stream")
+		req.Header.Add("fileContentType", ContentType(f.Name))
+		redrictresp, err := client.Do(req)
+		defer redrictresp.Body.Close()
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()
 			Endresp(result, resp)
 			return
 		}
+
+
+		//redrictresp, err := http.Post("http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, "application/octet-stream", req.Body)
+		//if err != nil {
+		//	result.Code = -1
+		//	result.Error = err.Error()
+		//	Endresp(result, resp)
+		//	return
+		//}
 
 		rrbs, _ := ioutil.ReadAll(redrictresp.Body)
 		resp.Write(rrbs)
