@@ -59,7 +59,12 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	http.Redirect(resp, req, "http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, 303)
+	server, err := RandomElement(ls.APPConfig.Object4d)
+	if err != nil {
+        panic(err)
+	}
+
+	http.Redirect(resp, req, "http://"+server+"/"+f4d.Object4d, 303)
 }
 func file_post(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
@@ -145,8 +150,13 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 	}
 	{
+		server, err := RandomElement(ls.APPConfig.Object4d)
+		if err != nil {
+			panic(err)
+		}
+
 		client := &http.Client{}
-		req, err := http.NewRequest("POST", "http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, req.Body)
+		req, err := http.NewRequest("POST", "http://"+server+"/"+f4d.Object4d, req.Body)
 		req.Header.Add("Content-Type", "application/octet-stream")
 		req.Header.Add(oc.Ctype, ContentType(f.Name))
 		redrictresp, err := client.Do(req)
