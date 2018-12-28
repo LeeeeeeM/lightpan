@@ -19,8 +19,7 @@ func user(resp http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case http.MethodGet:
 		user_get(resp, req)
-	case http.MethodPost:
-		user_post(resp, req)
+
 	case http.MethodPut:
 		user_put(resp, req)
 	case http.MethodDelete:

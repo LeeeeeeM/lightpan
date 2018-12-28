@@ -11,6 +11,7 @@ func Init() {
 	server.M.ServerMux.HandleFunc("/group/owner", checktoken)
 	server.M.ServerMux.HandleFunc("/group/user", checktoken)
 	server.M.ServerMux.HandleFunc("/login", login)
+	server.M.ServerMux.HandleFunc("/regist", user_post)
 
 	server.F.ServerMux.HandleFunc("/", file)
 
