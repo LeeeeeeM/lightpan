@@ -15,6 +15,7 @@ import (
 	"io/ioutil"
 	"time"
 
+	"fmt"
 	"github.com/light4d/lightpan/fservice"
 )
 
@@ -36,7 +37,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
 	uid := getuid(req)
 	f := model.ParseFile(req.RequestURI)
-	access , err := fservice.CheckVistorAccess(uid, f)
+	access, err := fservice.CheckVistorAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -53,7 +54,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	 f4d,folder , err := fservice.GetFile(f)
+	f4d, folder, err := fservice.GetFile(f)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -63,14 +64,15 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	if(f4d!=nil){
-		http.Redirect(resp, req, "http://"+ ls.APPConfig.RandomElement()+"/"+f4d.Object4d, 303)
+	if f4d != nil {
+		http.Redirect(resp, req, "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, 303)
 	}
-	if folder!=nil{
-		result.Result=folder
+	if folder != nil {
+		result.Result = folder
 		Endresp(result, resp)
 		return
 	}
+	fmt.Println(f4d, folder, err)
 }
 func file_post(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
@@ -87,7 +89,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 	query := httpserver.Getfilter(req)
 	f := model.ParseFile(req.RequestURI)
 
-	access,  err := fservice.CheckVistorAccess(uid, f)
+	access, err := fservice.CheckVistorAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -117,17 +119,17 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	f4d,folder , err := fservice.GetFile(f)
+	f4d, folder, err := fservice.GetFile(f)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
 		log.Warn(log.Fields{
-			"err":    err.Error(),
+			"err": err.Error(),
 		})
 		Endresp(result, resp)
 		return
 	}
-	if(folder!=nil){
+	if folder != nil {
 		result = om.CommonResp{
 			Error: om.NewErr("path already exist  a folder"),
 			Code:  -1,
@@ -138,7 +140,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	if f4d == nil  {
+	if f4d == nil {
 		pub := false
 		pub_, _ := query["pub"]
 		if pub_ != nil {
@@ -150,7 +152,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 
 		f4d = &model.Object4dFile{
 			User:       f.User,
-			Path:     f.Path,
+			Path:       f.Path,
 			Pub:        pub,
 			Createtime: time.Now(),
 			Version:    0,
@@ -176,7 +178,6 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 	}
 	{
-
 
 		client := &http.Client{}
 		req, err := http.NewRequest("POST", "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, req.Body)
