@@ -12,7 +12,7 @@ type File struct {
 
 type Object4dFile struct {
 	User, Path string
-	Isfolder   bool `gorm:"-"`
+	Isfolder   bool `gorm:"-",json:"-"`
 	Pub, Del   bool
 	Version    int
 	Object4d   string
