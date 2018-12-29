@@ -19,7 +19,8 @@ function $fetch(method,url,data){
             data:data,
             headers:{
                 token: getCookie('token')
-            }
+            },
+            credentials: 'includes' 
         }).then(res=>{
             let body = res.data
             reslove(body)
