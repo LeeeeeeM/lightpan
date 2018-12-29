@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import {
-  login }from '@/io/serverapi'
+  import {signin} from '../io/serverapi.js'
 export default {
   name: 'login',
+ 
   data () {
     return {
         user: {
@@ -31,14 +31,12 @@ export default {
   methods: {
      async loginform() {
       try {
-        const res = await login()
-        if (res.code === 0) {
-          console.log(res)
-        } else {
-          throw new Error('获取数据失败')
-        }
+        console.log(this.user)
+        const res = await signin(this.user)
+        console.log(res)
+       
       } catch (err) {
-        console.log('获取数据失败', err)
+        console.log('err', err)
       }
     },
   },

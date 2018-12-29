@@ -20,15 +20,13 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `file` (
-  `user` varchar(45) NOT NULL,
-  `folder` varchar(200) DEFAULT NULL,
-  `name` varchar(260) NOT NULL,
+  `user` varchar(45) CHARACTER SET big5 NOT NULL,
+  `path` varchar(250) NOT NULL,
   `pub` tinyint(1) NOT NULL DEFAULT '1',
   `del` tinyint(1) NOT NULL DEFAULT '1',
   `createtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `version` int(11) NOT NULL DEFAULT '0',
   `object4d` varchar(260) NOT NULL,
-  UNIQUE KEY `furl` (`user`,`folder`,`name`,`del`,`version`)
+  UNIQUE KEY `furl` (`user`,`path`,`del`,`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 

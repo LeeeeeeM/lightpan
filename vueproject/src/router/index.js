@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import folder from '@/page/folder'
+import up from '@/page/up'
 import login from '@/page/login'
-import upload from '@/page/upload'
+import list from '@/page/list'
 
 Vue.use(Router)
 
@@ -14,13 +14,13 @@ export default new Router({
       name: 'login',
       component: login
     },{
-      path: '/',
-      name: 'folder',
-      component: folder
+      path: '/up',
+      name: 'up',
+      component: up
     },{
-      path: '/upload',
-      name: 'upload',
-      component: upload
+      path: '/',
+      name: 'list',
+      component: list
     },
   ],
   mode:'history'

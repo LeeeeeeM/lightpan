@@ -7,17 +7,11 @@ import (
 	"github.com/light4d/lightpan/mservice"
 	"strconv"
 )
+//CheckUrlAccess
+// 1.who want
+// 2.who's
 
-func CheckUrlAccess(uid string, f *model.File) (access bool, f4d *model.Object4dFile, err error) {
-
-	f4d, err = GetFile(*f)
-	if err != nil {
-		return
-	}
-	if f4d != nil && f4d.Pub {
-		access = true
-		return
-	}
+func CheckVistorAccess(uid string, f  model.File) (access bool, err error) {
 	if uid == f.User {
 		access = true
 		return

@@ -3,8 +3,7 @@ package router
 import (
 	"path"
 	"strings"
-	"math/rand"
-	"errors"
+
 )
 
 //ContentType根据文件名获取contentType
@@ -115,10 +114,3 @@ func ContentType(fileName string) string {
 	return mime[strings.ToLower(strings.Replace(suffix, ".", "", -1))]
 }
 
-//RandomElement根据传入的数组,随机返回一个数组中的元素
-func RandomElement(array []string) (string, error){
-	if len(array) == 0 {
-		return "", errors.New("传入数组不能为空")
-	}
-	return array[rand.Intn(len(array) - 1)], nil
-}

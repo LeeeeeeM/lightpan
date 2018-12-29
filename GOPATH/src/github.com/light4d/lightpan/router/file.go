@@ -36,7 +36,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
 	uid := getuid(req)
 	f := model.ParseFile(req.RequestURI)
-	access, f4d, err := fservice.CheckUrlAccess(uid, f)
+	access , err := fservice.CheckVistorAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -53,18 +53,24 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	if f4d == nil {
+	 f4d,folder , err := fservice.GetFile(f)
+	if err != nil {
 		result.Code = -1
-		result.Error = om.NewErr("not found")
+		result.Error = err.Error()
+		log.Info(log.Fields{
+			"result": result,
+		})
 		Endresp(result, resp)
 		return
 	}
-	server, err := RandomElement(ls.APPConfig.Object4d)
-	if err != nil {
-        panic(err)
+	if(f4d!=nil){
+		http.Redirect(resp, req, "http://"+ ls.APPConfig.RandomElement()+"/"+f4d.Object4d, 303)
 	}
-
-	http.Redirect(resp, req, "http://"+server+"/"+f4d.Object4d, 303)
+	if folder!=nil{
+		result.Result=folder
+		Endresp(result, resp)
+		return
+	}
 }
 func file_post(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
@@ -81,14 +87,15 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 	query := httpserver.Getfilter(req)
 	f := model.ParseFile(req.RequestURI)
 
-	access, f4d, err := fservice.CheckUrlAccess(uid, f)
-	log.Info(log.Fields{
-		"access": access,
-		"f4d":    f4d,
-	})
+	access,  err := fservice.CheckVistorAccess(uid, f)
+
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
+		log.Warn(log.Fields{
+			"access": access,
+			"err":    err.Error(),
+		})
 		Endresp(result, resp)
 		return
 	}
@@ -110,8 +117,28 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-
-	if f4d == nil {
+	f4d,folder , err := fservice.GetFile(f)
+	if err != nil {
+		result.Code = -1
+		result.Error = err.Error()
+		log.Warn(log.Fields{
+			"err":    err.Error(),
+		})
+		Endresp(result, resp)
+		return
+	}
+	if(folder!=nil){
+		result = om.CommonResp{
+			Error: om.NewErr("path already exist  a folder"),
+			Code:  -1,
+		}
+		log.Warn(log.Fields{
+			"error": err.Error(),
+		})
+		Endresp(result, resp)
+		return
+	}
+	if f4d == nil  {
 		pub := false
 		pub_, _ := query["pub"]
 		if pub_ != nil {
@@ -123,8 +150,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 
 		f4d = &model.Object4dFile{
 			User:       f.User,
-			Folder:     f.Folder,
-			Name:       f.Name,
+			Path:     f.Path,
 			Pub:        pub,
 			Createtime: time.Now(),
 			Version:    0,
@@ -150,15 +176,12 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 	}
 	{
-		server, err := RandomElement(ls.APPConfig.Object4d)
-		if err != nil {
-			panic(err)
-		}
+
 
 		client := &http.Client{}
-		req, err := http.NewRequest("POST", "http://"+server+"/"+f4d.Object4d, req.Body)
+		req, err := http.NewRequest("POST", "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, req.Body)
 		req.Header.Add("Content-Type", "application/octet-stream")
-		req.Header.Add(oc.Ctype, ContentType(f.Name))
+		req.Header.Add(oc.Ctype, ContentType(f.Path))
 		redrictresp, err := client.Do(req)
 		defer redrictresp.Body.Close()
 		if err != nil {
@@ -167,14 +190,6 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Endresp(result, resp)
 			return
 		}
-
-		//redrictresp, err := http.Post("http://"+ls.APPConfig.Object4d[0]+"/"+f4d.Object4d, "application/octet-stream", req.Body)
-		//if err != nil {
-		//	result.Code = -1
-		//	result.Error = err.Error()
-		//	Endresp(result, resp)
-		//	return
-		//}
 
 		rrbs, _ := ioutil.ReadAll(redrictresp.Body)
 		resp.Write(rrbs)

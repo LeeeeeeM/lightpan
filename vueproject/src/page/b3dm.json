@@ -1,0 +1,220 @@
+{
+    "scene": "defaultScene",
+    "extensionsUsed": [
+        "KHR_binary_glTF",
+        "CESIUM_RTC"
+    ],
+    "extensions": {
+        "CESIUM_RTC": {
+            "center": [
+                -2264945.5363996000960469,
+                5009578.1396488798782229,
+                3222404.1190114300698042
+            ]
+        }
+    },
+    "scenes": {
+        "defaultScene": {
+            "nodes": [
+                "node_0"
+            ]
+        }
+    },
+    "nodes": {
+        "node_0": {
+            "meshes": [
+                "mesh_0"
+            ]
+        }
+    },
+    "samplers": {
+        "sampler_0": {
+            "minFilter": 9987
+        }
+    },
+    "techniques": {
+        "tech_0": {
+            "parameters": {
+                "tex": {
+                    "type": 35678
+                },
+                "mv": {
+                    "semantic": "CESIUM_RTC_MODELVIEW",
+                    "type": 35676
+                },
+                "proj": {
+                    "semantic": "PROJECTION",
+                    "type": 35676
+                },
+                "pos": {
+                    "semantic": "POSITION",
+                    "type": 35665
+                },
+                "texc": {
+                    "semantic": "TEXCOORD_0",
+                    "type": 35664
+                }
+            },
+            "program": "prog_0",
+            "states": {
+                "enable": [
+                    2929,
+                    2884
+                ]
+            },
+            "attributes": {
+                "a_pos": "pos",
+                "a_texc": "texc"
+            },
+            "uniforms": {
+                "u_tex": "tex",
+                "u_mv": "mv",
+                "u_proj": "proj"
+            }
+        }
+    },
+    "programs": {
+        "prog_0": {
+            "attributes": [
+                "a_pos",
+                "a_texc"
+            ],
+            "vertexShader": "vs",
+            "fragmentShader": "fs"
+        }
+    },
+    "shaders": {
+        "vs": {
+            "type": 35633,
+            "extensions": {
+                "KHR_binary_glTF": {
+                    "bufferView": "bv_vs"
+                }
+            }
+        },
+        "fs": {
+            "type": 35632,
+            "extensions": {
+                "KHR_binary_glTF": {
+                    "bufferView": "bv_fs"
+                }
+            }
+        }
+    },
+    "bufferViews": {
+        "bv_vs": {
+            "buffer": "binary_glTF",
+            "byteOffset": 0,
+            "byteLength": 214
+        },
+        "bv_fs": {
+            "buffer": "binary_glTF",
+            "byteOffset": 214,
+            "byteLength": 130
+        },
+        "bv_pos_0": {
+            "buffer": "binary_glTF",
+            "byteOffset": 344,
+            "byteLength": 5844,
+            "target": 34962
+        },
+        "bv_uv_0": {
+            "buffer": "binary_glTF",
+            "byteOffset": 6188,
+            "byteLength": 3896,
+            "target": 34962
+        },
+        "bv_ind_0": {
+            "buffer": "binary_glTF",
+            "byteOffset": 10084,
+            "byteLength": 2262,
+            "target": 34963
+        },
+        "bv_img_0": {
+            "buffer": "binary_glTF",
+            "byteOffset": 12346,
+            "byteLength": 2744
+        }
+    },
+    "meshes": {
+        "mesh_0": {
+            "primitives": [
+                {
+                    "attributes": {
+                        "POSITION": "acc_pos_0",
+                        "TEXCOORD_0": "acc_uv_0"
+                    },
+                    "indices": "acc_ind_0",
+                    "material": "mat_0",
+                    "mode": 4
+                }
+            ]
+        }
+    },
+    "accessors": {
+        "acc_pos_0": {
+            "bufferView": "bv_pos_0",
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 487,
+            "type": "VEC3",
+            "min": [
+                -53.1338700000000017,
+                -32.4256999999999991,
+                -28.1140000000000008
+            ],
+            "max": [
+                50.1735200000000034,
+                31.0314599999999992,
+                27.3385099999999994
+            ]
+        },
+        "acc_uv_0": {
+            "bufferView": "bv_uv_0",
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 487,
+            "type": "VEC2"
+        },
+        "acc_ind_0": {
+            "bufferView": "bv_ind_0",
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 1131,
+            "type": "SCALAR"
+        }
+    },
+    "materials": {
+        "mat_0": {
+            "technique": "tech_0",
+            "values": {
+                "tex": "tex_0"
+            }
+        }
+    },
+    "textures": {
+        "tex_0": {
+            "format": 6407,
+            "internalFormat": 6407,
+            "sampler": "sampler_0",
+            "source": "img_0"
+        }
+    },
+    "images": {
+        "img_0": {
+            "extensions": {
+                "KHR_binary_glTF": {
+                    "bufferView": "bv_img_0",
+                    "mimeType": "image\/jpeg",
+                    "height": 128,
+                    "width": 128
+                }
+            }
+        }
+    },
+    "buffers": {
+        "binary_glTF": {
+            "byteLength": 15090
+        }
+    }
+}
