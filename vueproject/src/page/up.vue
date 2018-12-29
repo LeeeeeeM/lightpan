@@ -1,8 +1,10 @@
 <template>
   <div class="hello">
+  <input type="text" v-model="folder" />
     <div>
       <h2>post text</h2>
       <textarea v-model="text" type='textarea'></textarea>
+      <input type="text" v-model="name" />
       <button @click="postText">提交</button>
 
     </div>
@@ -15,17 +17,21 @@
 </template>
 
 <script>
+import { postfile } from '@/io/serverapi'
 export default {
   name: 'up',
   data () {
     return {
       msg: 'Welcome to folder',
       text:"",
+      name:"",
+      folder:"",
     }
   },
   methods: {
     postText () {
     　　console.log(this.text)
+      postfile("timeloveboy","folder",this.name,this.text)
     },
     getFile () {
        let file=this.$refs.file
@@ -38,6 +44,7 @@ export default {
         reader.onload = function (e) {
           console.log('文件内容')
           console.log(e.target.result)
+          postfile("timeloveboy","folder",e.target.name,e.target.result)
         }
  
     }
