@@ -34,10 +34,13 @@ func (u *Object4dFile) FixShow() *Object4dFile {
 
 func ParseFile(remoteuri string) (f File) {
 	f = *new(File)
-	remoteuri = remoteuri[1:]
-	f.User = remoteuri[:strings.Index(remoteuri, "/")]
-	remoteuri = remoteuri[strings.Index(remoteuri, "/"):]
-	f.Path = remoteuri
+	if len(remoteuri) > 0 {
+		remoteuri = remoteuri[1:]
+		f.User = remoteuri[:strings.Index(remoteuri, "/")]
+		remoteuri = remoteuri[strings.Index(remoteuri, "/"):]
+		f.Path = remoteuri
+
+	}
 
 	return
 }

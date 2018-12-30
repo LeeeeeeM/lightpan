@@ -13,10 +13,9 @@ import (
 
 	"github.com/gobestsdk/gobase/log"
 	"io/ioutil"
-	"time"
 
-	"fmt"
 	"github.com/light4d/lightpan/fservice"
+	"time"
 )
 
 func file(resp http.ResponseWriter, req *http.Request) {
@@ -66,13 +65,13 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	}
 	if f4d != nil {
 		http.Redirect(resp, req, "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, 303)
+		return
 	}
 	if folder != nil {
 		result.Result = folder
 		Endresp(result, resp)
 		return
 	}
-	fmt.Println(f4d, folder, err)
 }
 func file_post(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
@@ -184,7 +183,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		req.Header.Add("Content-Type", "application/octet-stream")
 		req.Header.Add(oc.Ctype, ContentType(f.Path))
 		redrictresp, err := client.Do(req)
-		defer redrictresp.Body.Close()
+
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()

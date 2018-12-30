@@ -3,6 +3,7 @@ package fservice
 import (
 	"github.com/light4d/lightpan/model"
 
+	"fmt"
 	"github.com/gobestsdk/gobase/log"
 	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/object4d/dao"
@@ -13,6 +14,8 @@ func GetFile(f model.File) (f4d *model.Object4dFile, folder *model.Folder, err e
 	db := dao.DB(server.APPConfig.Mysql)
 	f4ds := make([]model.Object4dFile, 0)
 	err = db.Table("file").Where("user = ? and path = ? and version=0", f.User, f.Path).Find(&f4ds).Error
+
+	fmt.Println(f.Path)
 	if err != nil {
 		log.Warn(log.Fields{
 			"sql err": err,
@@ -46,6 +49,9 @@ func Folderlist(prepath string, folder *model.Folder, fs ...model.Object4dFile) 
 		childpath := f.Path[len(prepath):]
 		if strings.Contains(childpath, "/") {
 			foldername := childpath[:strings.Index(childpath, "/")]
+			if folder.Childfolder == nil {
+				folder.Childfolder = make(map[string]*model.Folder)
+			}
 			folder.Childfolder[foldername] = (new(model.Folder))
 			Folderlist(prepath+"/"+foldername, folder.Childfolder[foldername], f)
 		} else {
