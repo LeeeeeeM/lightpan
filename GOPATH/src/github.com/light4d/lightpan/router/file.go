@@ -42,7 +42,10 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
-		log.Info(log.Fields{
+
+		log.Warn(log.Fields{
+			"err": err.Error(),
+
 			"result": result,
 		})
 		Endresp(result, resp)
@@ -58,7 +61,9 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
-		log.Info(log.Fields{
+
+		log.Warn(log.Fields{
+			"err":    err.Error(),
 			"result": result,
 		})
 		Endresp(result, resp)
@@ -162,6 +167,9 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()
+			log.Warn(log.Fields{
+				"err": err.Error(),
+			})
 			Endresp(result, resp)
 			return
 		}
@@ -170,6 +178,9 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()
+			log.Warn(log.Fields{
+				"err": err.Error(),
+			})
 			Endresp(result, resp)
 			return
 		}
@@ -179,6 +190,9 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()
+			log.Warn(log.Fields{
+				"err": err.Error(),
+			})
 			Endresp(result, resp)
 			return
 		}
@@ -194,6 +208,9 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			result.Code = -1
 			result.Error = err.Error()
+			log.Warn(log.Fields{
+				"err": err.Error(),
+			})
 			Endresp(result, resp)
 			return
 		}
