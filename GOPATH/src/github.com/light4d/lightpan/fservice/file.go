@@ -73,10 +73,10 @@ func NewFileRecord(f4d model.Object4dFile) (err error) {
 
 func Tobeold(f4d model.Object4dFile) (err error) {
 	db := dao.DB(server.APPConfig.Mysql)
-	err = db.Table("file").Where("object4d = " + f4d.Object4d +
-		" and user = " + f4d.User +
-		" and path = " + f4d.Path +
-		" and version = " + strconv.Itoa(f4d.Version)).Update(map[string]interface{}{
+	err = db.Table("file").Where("object4d = '" + f4d.Object4d +
+		"' and user = '" + f4d.User +
+		"' and path = '" + f4d.Path +
+		"' and version = " + strconv.Itoa(f4d.Version)).Update(map[string]interface{}{
 		"version": f4d.Version + 1,
 	}).Error
 	if err != nil {
