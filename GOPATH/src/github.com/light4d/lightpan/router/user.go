@@ -68,7 +68,7 @@ func user_post(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	user.Password = map_user["password"].(string)
-	userid, err := mservice.CreateUser(user)
+	userid, err := mservice.CreateUser(*user)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
