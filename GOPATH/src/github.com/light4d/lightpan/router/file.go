@@ -200,7 +200,8 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 	{
 
 		client := &http.Client{}
-		req, err := http.NewRequest("POST", "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, req.Body)
+		url := "http://" + ls.APPConfig.RandomElement() + "/" + f4d.Object4d
+		req, err := http.NewRequest("POST", url, req.Body)
 		req.Header.Add("Content-Type", "application/octet-stream")
 		req.Header.Add(oc.Ctype, ContentType(f.Path))
 		redrictresp, err := client.Do(req)
@@ -210,6 +211,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			result.Error = err.Error()
 			log.Warn(log.Fields{
 				"err": err.Error(),
+				"url": url,
 			})
 			Endresp(result, resp)
 			return
