@@ -27,7 +27,7 @@ CREATE TABLE `file` (
   `createtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `version` int(11) NOT NULL DEFAULT '0' COMMENT 'version 采用递增原则\n但是设定0为最新的',
   `object4d` varchar(260) NOT NULL,
-  UNIQUE KEY `furl` (`user`,`path`,`del`,`version`)
+  UNIQUE KEY `furl` (`user`,`path`,`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
  

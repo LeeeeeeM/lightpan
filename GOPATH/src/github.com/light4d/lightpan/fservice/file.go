@@ -7,6 +7,8 @@ import (
 	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/object4d/dao"
 	"strings"
+
+	"strconv"
 )
 
 func GetFile(f model.File) (f4d *model.Object4dFile, folder *model.Folder, err error) {
@@ -61,6 +63,22 @@ func Folderlist(prepath string, folder *model.Folder, fs ...model.Object4dFile) 
 func NewFileRecord(f4d model.Object4dFile) (err error) {
 	db := dao.DB(server.APPConfig.Mysql)
 	err = db.Table("file").Create(f4d).Error
+	if err != nil {
+		log.Warn(log.Fields{
+			"sql err": err,
+		})
+	}
+	return
+}
+
+func Tobeold(f4d model.Object4dFile) (err error) {
+	db := dao.DB(server.APPConfig.Mysql)
+	err = db.Table("file").Where("object4d = " + f4d.Object4d +
+		" and user = " + f4d.User +
+		" and path = " + f4d.Path +
+		" and version = " + strconv.Itoa(f4d.Version)).Update(map[string]interface{}{
+		"version": f4d.Version + 1,
+	}).Error
 	if err != nil {
 		log.Warn(log.Fields{
 			"sql err": err,

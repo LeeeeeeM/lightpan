@@ -166,7 +166,13 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			return
 		}
 	} else {
-		f4d.Version += 1
+		err = fservice.Tobeold(*f4d)
+		if err != nil {
+			result.Code = -1
+			result.Error = err.Error()
+			Endresp(result, resp)
+			return
+		}
 		f4d.Createtime = time.Now()
 		f4d.Object4d = newobj4d.Url()
 		err = fservice.NewFileRecord(*f4d)
