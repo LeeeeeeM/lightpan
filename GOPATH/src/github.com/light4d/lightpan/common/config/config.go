@@ -19,9 +19,12 @@ type Config struct {
 }
 
 //RandomElement根据传入的数组,随机返回一个数组中的元素
-func (c Config)RandomElement() (string ){
-	if len(c.Object4d) == 0 {
+func (c Config) RandomElement() string {
+	os := len(c.Object4d)
+	if os == 0 {
 		panic("传入数组不能为空")
+	} else if os == 1 {
+		return c.Object4d[0]
 	}
-	return c.Object4d[rand.Intn(len(c.Object4d) - 1)]
+	return c.Object4d[rand.Intn(len(c.Object4d)-1)]
 }
