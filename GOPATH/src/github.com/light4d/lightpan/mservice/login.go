@@ -19,6 +19,7 @@ func Login(userid, password string) (string, error) {
 	}
 
 	if (existuser.Password) != lm.DBPassword(password) {
+
 		return "", errors.New("用户名密码错误")
 	}
 

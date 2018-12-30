@@ -20,7 +20,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `file` (
-  `user` varchar(45) CHARACTER SET big5 NOT NULL,
+  `user` varchar(45)  NOT NULL,
   `path` varchar(250) NOT NULL,
   `pub` tinyint(1) NOT NULL DEFAULT '1',
   `del` tinyint(1) NOT NULL DEFAULT '1',

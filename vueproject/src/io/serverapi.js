@@ -3,24 +3,19 @@ import axios from 'axios'
 export const mhost = 'http://127.0.0.1:9003/';
 export const fhost = 'http://127.0.0.1:9002/';
  
-function getCookie(name) {
-    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-    if (arr = document.cookie.match(reg))
-        return unescape(arr[2]);
-    else
-        return null;
-}
+
 
 function $fetch(method,url,data){
+    let token=window.localStorage.getItem('token');
     return new Promise((reslove,reject)=>{
         axios({
             method,
             url,
-            data:data,
             headers:{
-                token: getCookie('token')
+                'token':token,
             },
-            credentials: 'includes' 
+            mode:'cors',
+            data:data,
         }).then(res=>{
             let body = res.data
             reslove(body)

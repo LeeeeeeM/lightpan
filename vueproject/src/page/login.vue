@@ -34,7 +34,8 @@ export default {
         console.log(this.user)
         const res = await signin(this.user)
         console.log(res)
-       
+        let token=res.Result.Token
+        window.localStorage.setItem('token',token);
       } catch (err) {
         console.log('err', err)
       }

@@ -44,7 +44,6 @@ func user_get(resp http.ResponseWriter, req *http.Request) {
 func user_post(resp http.ResponseWriter, req *http.Request) {
 	result := model.CommonResp{}
 
-	user := lm.User{}
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		result.Code = -1
@@ -52,6 +51,15 @@ func user_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
+	map_user := make(map[string]interface{})
+	err = json.Unmarshal(body, &map_user)
+	if err != nil {
+		result.Code = -1
+		result.Error = err.Error()
+		Endresp(result, resp)
+		return
+	}
+	user := new(lm.User)
 	err = json.Unmarshal(body, &user)
 	if err != nil {
 		result.Code = -1
@@ -59,7 +67,7 @@ func user_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-
+	user.Password = map_user["password"].(string)
 	userid, err := mservice.CreateUser(user)
 	if err != nil {
 		result.Code = -1

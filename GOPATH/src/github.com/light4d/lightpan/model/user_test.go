@@ -3,5 +3,5 @@ package model
 import "testing"
 
 func TestDBPassword(t *testing.T) {
-	println(DBPassword("000666"))
+	println(DBPassword("abc014916"))
 }

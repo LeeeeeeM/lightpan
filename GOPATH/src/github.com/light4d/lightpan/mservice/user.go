@@ -26,6 +26,7 @@ func checkandfixCreateUser(user *lm.User) (err error) {
 		return model.NewErrData("user id error format", user.ID)
 	}
 	user.Password = lm.DBPassword(user.Password)
+
 	user.Registetime = time.Now()
 
 	return
