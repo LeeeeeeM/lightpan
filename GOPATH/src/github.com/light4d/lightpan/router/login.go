@@ -10,6 +10,7 @@ import (
 
 	"github.com/gobestsdk/gobase/httpserver"
 
+	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/lightpan/mservice"
 )
 
@@ -19,7 +20,7 @@ func login(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodPost:
 		login_post(resp, req)
 	default:
-		httpserver.Options(req, resp, "application/json", AccessControlAllowMethods())
+		httpserver.Options(req, resp, "application/json", server.Appname, AccessControlAllowMethods())
 	}
 }
 

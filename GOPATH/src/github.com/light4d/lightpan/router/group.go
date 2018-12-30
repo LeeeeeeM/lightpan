@@ -11,6 +11,7 @@ import (
 
 	"github.com/gobestsdk/gobase/httpserver"
 
+	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/lightpan/mservice"
 )
 
@@ -26,7 +27,7 @@ func group(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		group_delete(resp, req)
 	default:
-		httpserver.Options(req, resp, "application/json", AccessControlAllowMethods())
+		httpserver.Options(req, resp, "application/json", server.Appname, AccessControlAllowMethods())
 	}
 }
 func group_get(resp http.ResponseWriter, req *http.Request) {

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gobestsdk/gobase/httpserver"
 
+	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/lightpan/mservice"
 	"github.com/light4d/object4d/model"
 	"io/ioutil"
@@ -24,7 +25,7 @@ func group_user(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		group_user_delete(resp, req)
 	default:
-		httpserver.Options(req, resp, "application/json", AccessControlAllowMethods())
+		httpserver.Options(req, resp, "application/json", server.Appname, AccessControlAllowMethods())
 	}
 }
 

@@ -3,7 +3,6 @@ package fservice
 import (
 	"github.com/light4d/lightpan/model"
 
-	"fmt"
 	"github.com/gobestsdk/gobase/log"
 	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/object4d/dao"
@@ -15,7 +14,6 @@ func GetFile(f model.File) (f4d *model.Object4dFile, folder *model.Folder, err e
 	f4ds := make([]model.Object4dFile, 0)
 	err = db.Table("file").Where("user = ? and path = ? and version=0", f.User, f.Path).Find(&f4ds).Error
 
-	fmt.Println(f.Path)
 	if err != nil {
 		log.Warn(log.Fields{
 			"sql err": err,

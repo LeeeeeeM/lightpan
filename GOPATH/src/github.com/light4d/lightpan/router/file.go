@@ -15,6 +15,7 @@ import (
 	"io/ioutil"
 
 	"github.com/light4d/lightpan/fservice"
+	"github.com/light4d/object4d/common/server"
 	"time"
 )
 
@@ -28,7 +29,7 @@ func file(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		file_delete(resp, req)
 	default:
-		httpserver.Options(req, resp, "application/octet-stream", AccessControlAllowMethods())
+		httpserver.Options(req, resp, "application/octet-stream", server.Appname, AccessControlAllowMethods())
 	}
 }
 

@@ -11,6 +11,7 @@ import (
 
 	"github.com/gobestsdk/gobase/httpserver"
 
+	"github.com/light4d/lightpan/common/server"
 	"github.com/light4d/lightpan/mservice"
 )
 
@@ -25,7 +26,7 @@ func user(resp http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		user_delete(resp, req)
 	default:
-		httpserver.Options(req, resp, "application/json", AccessControlAllowMethods())
+		httpserver.Options(req, resp, "application/json", server.Appname, AccessControlAllowMethods())
 	}
 }
 func user_get(resp http.ResponseWriter, req *http.Request) {
