@@ -73,11 +73,20 @@ func NewFileRecord(f4d model.Object4dFile) (err error) {
 
 func Tobeold(f4d model.Object4dFile) (err error) {
 	db := dao.DB(server.APPConfig.Mysql)
+	originold := model.Object4dFile{}
+	err = db.Table("file").Where("user = '" + f4d.User +
+		"' and path = '" + f4d.Path + "'").Order("version desc").First(&originold).Error
+	if err != nil {
+		log.Warn(log.Fields{
+			"sql err": err,
+		})
+		return
+	}
 	err = db.Table("file").Where("object4d = '" + f4d.Object4d +
 		"' and user = '" + f4d.User +
 		"' and path = '" + f4d.Path +
 		"' and version = " + strconv.Itoa(f4d.Version)).Update(map[string]interface{}{
-		"version": f4d.Version + 1,
+		"version": originold.Version + 1,
 	}).Error
 	if err != nil {
 		log.Warn(log.Fields{
