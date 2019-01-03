@@ -9,6 +9,7 @@ import (
 type Config struct {
 	HttpPort int    `json:"http_port"`
 	FsPort   int    `json:"fs_port"`
+	Appport  int    `json:"app_port"`
 	Mysql    string `json:"mysql"`
 	Redis    struct {
 		Addr     string `json:"addr"`
@@ -16,6 +17,7 @@ type Config struct {
 		DB       int    `json:"db"`
 	} `json:"redis"`
 	Object4d []string `json:"object4d"`
+	Dist     string   `json:"dist"`
 }
 
 //RandomElement根据传入的数组,随机返回一个数组中的元素

@@ -13,6 +13,7 @@ var (
 		FsPort:   9002,
 		Mysql:    "",
 		Object4d: []string{},
+		Dist:     "dist",
 	}
 )
 

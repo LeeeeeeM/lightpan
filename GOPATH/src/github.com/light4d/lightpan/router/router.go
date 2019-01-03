@@ -14,5 +14,6 @@ func Init() {
 	server.M.ServerMux.HandleFunc("/regist", user_post)
 
 	server.F.ServerMux.HandleFunc("/", file)
+	server.A.ServerMux.HandleFunc("/", app)
 
 }
