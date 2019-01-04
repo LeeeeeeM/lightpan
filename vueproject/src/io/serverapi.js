@@ -1,8 +1,8 @@
 import axios from 'axios'
- 
+
 export const mhost = 'http://127.0.0.1:9003/';
 export const fhost = 'http://127.0.0.1:9002/';
- 
+
 
 
 function $fetch(method,url,data){
@@ -25,9 +25,8 @@ function $fetch(method,url,data){
 
     })
 }
- 
+
 // 注册登录
 export const signin = data => $fetch('post',mhost+'login',data)
 
-export const postfile = (who,folder,name,data )=> $fetch('post',fhost+who+"/"+folder+"/"+name,data)
- 
+export const postfile = (who,folder,name,data )=> $fetch('post',fhost+who+"/"+folder+"/"+name,data);
