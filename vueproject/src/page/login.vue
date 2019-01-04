@@ -13,10 +13,10 @@
           <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
         </div>
         <h2 class="login-title color-main">LigthPan</h2>
-        <el-form-item prop="username">
-          <el-input name="username"
+        <el-form-item prop="id">
+          <el-input name="id"
                     type="text"
-                    v-model="loginForm.username"
+                    v-model="loginForm.id"
                     autoComplete="on"
                     placeholder="请输入用户名">
           <span slot="prefix">
@@ -60,8 +60,8 @@
 
       return {
         loginForm: {
-          username: 'admin',
-          password: '123456'
+          id: 'timeloveboy',
+          password: 'abc014916'
         },
         loginRules:rules,
         loading: false,

@@ -23,5 +23,5 @@ export default new Router({
       ]},
     {path: '*', redirect: '/404'}
   ],
-  mode:'history'
+  mode:'hash'
 })
