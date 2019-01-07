@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <body>
-<input id="fileFolder" name="fileFolder" type="file"  webkitdirectory>
+
+
+<script>
+  $.ajax({
+    type: "POST",
+    url:"http://47.107.102.188:9003/login" ,
+    dataType: "json",
+    data: JSON.stringify({
+          id:"timeloveboy",
+      password:"abc014916"
+    }),
+    contentType: 'application/json',
+    success: function (data) {
+
+    },
+    error: function (error) {
+      alert("报错" + JSON.stringify(error));
+    }
+  });
+</script>
 </body>
 </html>
