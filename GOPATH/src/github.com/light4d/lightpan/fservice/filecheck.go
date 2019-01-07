@@ -13,16 +13,16 @@ import (
 // 1.who want
 // 2.who's
 
-func CheckVistorAccess(uid string, f model.File) (access bool, err error) {
-	if uid == f.User {
+func CheckUrlAccess(uid string, f model.File) (access, pubonly bool, err error) {
+	pubonly = true
+	if uid == f.Who {
 		access = true
+		pubonly = false
 		return
 	}
-	_, b := mservice.CheckUserExist(f.User)
-	if !b {
-		return
-	} else {
-		f4d, folder, e := GetFile(f)
+	_, b := mservice.CheckUserExist(f.Who)
+	if b {
+		f4d, folder, e := GetFile(f, false)
 		if e != nil {
 
 			log.Warn(log.Fields{
@@ -43,7 +43,7 @@ func CheckVistorAccess(uid string, f model.File) (access bool, err error) {
 		}
 	}
 
-	g, b := mservice.CheckGroupExist(f.User)
+	g, b := mservice.CheckGroupExist(f.Who)
 
 	if !b {
 		return
@@ -54,6 +54,55 @@ func CheckVistorAccess(uid string, f model.File) (access bool, err error) {
 	})
 	if len(gus) == 1 {
 		access = true
+		pubonly = false
+		return
+	}
+	err = om.NewErr("len(groupuser)=" + strconv.Itoa(len(gus)))
+	return
+}
+
+func CheckWriteAccess(uid string, f model.File) (access, pubonly bool, err error) {
+	pubonly = true
+	if uid == f.Who {
+		access = true
+		pubonly = false
+		return
+	}
+	_, b := mservice.CheckUserExist(f.Who)
+	if b {
+		f4d, folder, e := GetFile(f, false)
+		if e != nil {
+
+			log.Warn(log.Fields{
+				"err": err.Error(),
+			})
+			err = e
+			return
+		}
+		if folder != nil {
+			access = true
+			return
+		}
+		if f4d.Pub {
+			access = true
+			return
+		} else {
+			return
+		}
+	}
+
+	g, b := mservice.CheckGroupExist(f.Who)
+
+	if !b {
+		return
+	}
+	gus, err := mservice.SearchGroupuser(map[string]interface{}{
+		"id":   g.ID,
+		"user": uid,
+	})
+	if len(gus) == 1 {
+		access = true
+		pubonly = false
 		return
 	}
 	err = om.NewErr("len(groupuser)=" + strconv.Itoa(len(gus)))

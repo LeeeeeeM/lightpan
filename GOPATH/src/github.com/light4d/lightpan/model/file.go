@@ -7,7 +7,7 @@ import (
 )
 
 type File struct {
-	User, Path string
+	Who, Path string
 }
 
 type Object4dFile struct {
@@ -38,7 +38,7 @@ func ParseFile(remoteuri string) (f File) {
 	if len(remoteuri) > 1 {
 		remoteuri = remoteuri[1:]
 		if strings.Contains(remoteuri, "/") {
-			f.User = remoteuri[:strings.Index(remoteuri, "/")]
+			f.Who = remoteuri[:strings.Index(remoteuri, "/")]
 		}
 		if strings.Contains(remoteuri, "/") {
 			remoteuri = remoteuri[strings.Index(remoteuri, "/"):]

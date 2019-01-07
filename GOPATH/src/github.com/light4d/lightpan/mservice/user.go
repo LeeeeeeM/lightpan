@@ -47,7 +47,7 @@ func SearchUser(filter map[string]interface{}) (result []lm.User, err error) {
 		"filter": filter,
 	})
 	db := dao.DB(server.APPConfig.Mysql)
-
+	defer db.Close()
 	err = db.Table("user").Find(&result, filter).Error
 	if err != nil {
 		log.Warn(log.Fields{
@@ -81,7 +81,9 @@ func DeleteUser(userid string) (err error) {
 	if !ex {
 		return errors.New("user not found")
 	}
-	err = dao.DB(server.APPConfig.Mysql).Where(filter).Table("user").Delete(&lm.User{}).Error
+	db := dao.DB(server.APPConfig.Mysql)
+	err = db.Where(filter).Table("user").Delete(&lm.User{}).Error
+	defer db.Close()
 	if err != nil {
 		log.Warn(log.Fields{
 			"Model.Delete": u,
@@ -109,6 +111,7 @@ func CreateUser(user lm.User) (userid string, err error) {
 	}
 
 	db := dao.DB(server.APPConfig.Mysql)
+	defer db.Close()
 	err = db.Table("user").Create(&user).Error
 	if err != nil {
 		log.Warn(log.Fields{
@@ -157,6 +160,7 @@ func UpdateUser(id string, updater map[string]interface{}) (err error) {
 	}
 
 	db := dao.DB(server.APPConfig.Mysql)
+	defer db.Close()
 	err = db.Table("user").Where("id = ?", id).Where("type = ''").Updates(updater).Error
 	if err != nil {
 		log.Warn(log.Fields{

@@ -39,7 +39,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
 	uid := getuid(req)
 	f := model.ParseFile(req.URL.Path)
-	access, err := fservice.CheckVistorAccess(uid, f)
+	access, pubonly, err := fservice.CheckReadAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -59,7 +59,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	f4d, folder, err := fservice.GetFile(f)
+	f4d, folder, err := fservice.GetFile(f, pubonly)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -97,7 +97,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 	query := httpserver.Getfilter(req)
 	f := model.ParseFile(req.URL.Path)
 
-	access, err := fservice.CheckVistorAccess(uid, f)
+	access, pubonly, err := fservice.CheckWriteAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -127,7 +127,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	f4d, folder, err := fservice.GetFile(f)
+	f4d, folder, err := fservice.GetFile(f, pubonly)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -159,7 +159,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 
 		f4d = &model.Object4dFile{
-			User:       f.User,
+			User:       f.Who,
 			Path:       f.Path,
 			Pub:        pub,
 			Createtime: time.Now(),

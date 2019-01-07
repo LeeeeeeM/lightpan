@@ -444,7 +444,7 @@
 							"file": {}
 						},
 						"url": {
-							"raw": "{{fhost}}/timeloveboy/lightpan/postman.json",
+							"raw": "{{fhost}}/timeloveboy/lightpan/postman.json?pub=true",
 							"host": [
 								"{{fhost}}"
 							],
@@ -452,6 +452,12 @@
 								"timeloveboy",
 								"lightpan",
 								"postman.json"
+							],
+							"query": [
+								{
+									"key": "pub",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -469,7 +475,7 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "{{fhost}}/timeloveboy/lightpan/postman.json",
+							"raw": "{{fhost}}/timeloveboy/lightpan/postman.json?pub=true",
 							"host": [
 								"{{fhost}}"
 							],
@@ -477,6 +483,12 @@
 								"timeloveboy",
 								"lightpan",
 								"postman.json"
+							],
+							"query": [
+								{
+									"key": "pub",
+									"value": "true"
+								}
 							]
 						}
 					},
