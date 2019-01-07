@@ -444,14 +444,14 @@
 							"file": {}
 						},
 						"url": {
-							"raw": "{{fhost}}/timeloveboy/jjdbf/3.png",
+							"raw": "{{fhost}}/timeloveboy/lightpan/postman.json",
 							"host": [
 								"{{fhost}}"
 							],
 							"path": [
 								"timeloveboy",
-								"jjdbf",
-								"3.png"
+								"lightpan",
+								"postman.json"
 							]
 						}
 					},
@@ -469,13 +469,14 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "{{fhost}}/timeloveboy/",
+							"raw": "{{fhost}}/timeloveboy/lightpan/postman.json",
 							"host": [
 								"{{fhost}}"
 							],
 							"path": [
 								"timeloveboy",
-								""
+								"lightpan",
+								"postman.json"
 							]
 						}
 					},
