@@ -9,11 +9,11 @@ import (
 	"strconv"
 )
 
-//CheckUrlAccess
+//CheckReadAccess
 // 1.who want
 // 2.who's
 
-func CheckUrlAccess(uid string, f model.File) (access, pubonly bool, err error) {
+func CheckReadAccess(uid string, f model.File) (access, pubonly bool, err error) {
 	pubonly = true
 	if uid == f.Who {
 		access = true
