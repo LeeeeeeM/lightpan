@@ -38,7 +38,7 @@ func file(resp http.ResponseWriter, req *http.Request) {
 func file_get(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
 	uid := getuid(req)
-	f := model.ParseFile(req.RequestURI)
+	f := model.ParseFile(req.URL.Path)
 	access, err := fservice.CheckVistorAccess(uid, f)
 
 	if err != nil {
@@ -95,7 +95,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	query := httpserver.Getfilter(req)
-	f := model.ParseFile(req.RequestURI)
+	f := model.ParseFile(req.URL.Path)
 
 	access, err := fservice.CheckVistorAccess(uid, f)
 
