@@ -14,8 +14,10 @@ import (
 	"github.com/gobestsdk/gobase/log"
 	"io/ioutil"
 
+	"fmt"
 	"github.com/light4d/lightpan/fservice"
 	"github.com/light4d/object4d/common/server"
+	"strings"
 	"time"
 )
 
@@ -70,7 +72,8 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if f4d != nil {
-		http.Redirect(resp, req, "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, 303)
+		BridgePost(f4d, req, resp)
+
 		return
 	}
 	if folder != nil {
@@ -198,29 +201,43 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 	}
 	{
-
-		client := &http.Client{}
-		url := "http://" + ls.APPConfig.RandomElement() + "/" + f4d.Object4d
-		req, err := http.NewRequest("POST", url, req.Body)
-		req.Header.Add("Content-Type", "application/octet-stream")
-		req.Header.Add(oc.Ctype, ContentType(f.Path))
-		redrictresp, err := client.Do(req)
-
-		if err != nil {
+		if err = BridgePost(f4d, req, resp); err != nil {
 			result.Code = -1
 			result.Error = err.Error()
 			log.Warn(log.Fields{
 				"err": err.Error(),
-				"url": url,
 			})
 			Endresp(result, resp)
-			return
 		}
 
-		rrbs, _ := ioutil.ReadAll(redrictresp.Body)
-		resp.Write(rrbs)
 	}
 
+}
+
+//Bridge 转发http流量
+func BridgePost(f4d *model.Object4dFile, oreq *http.Request, resp http.ResponseWriter) (err error) {
+	client := &http.Client{}
+	url := "http://" + ls.APPConfig.RandomElement() + "/" + f4d.Object4d
+	req, err := http.NewRequest(oreq.Method, url, oreq.Body)
+	if oreq.Method == "POST" {
+		req.Header.Add("Content-Type", "application/octet-stream")
+		req.Header.Add(oc.Ctype, ContentType(f4d.Path))
+	}
+
+	redrictresp, err := client.Do(req)
+
+	if err != nil {
+		return
+	}
+	fmt.Println(redrictresp.Header)
+	for k, v := range redrictresp.Header {
+
+		resp.Header().Set(k, strings.Join(v, ","))
+	}
+
+	rrbs, _ := ioutil.ReadAll(redrictresp.Body)
+	resp.Write(rrbs)
+	return
 }
 func file_delete(resp http.ResponseWriter, req *http.Request) {
 

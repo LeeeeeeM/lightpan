@@ -11,12 +11,13 @@ type File struct {
 }
 
 type Object4dFile struct {
-	User, Path, Name string
-	Isfolder         bool `gorm:"-",json:"-"`
-	Pub, Del         bool
-	Version          int
-	Object4d         string
-	Createtime       interface{}
+	User, Path string
+	Name       string `gorm:"-"`
+	Isfolder   bool   `gorm:"-",json:"-"`
+	Pub, Del   bool
+	Version    int
+	Object4d   string
+	Createtime interface{}
 }
 
 type Folder struct {
@@ -34,12 +35,16 @@ func (u *Object4dFile) FixShow() *Object4dFile {
 
 func ParseFile(remoteuri string) (f File) {
 	f = *new(File)
-	if len(remoteuri) > 0 {
+	if len(remoteuri) > 1 {
 		remoteuri = remoteuri[1:]
-		f.User = remoteuri[:strings.Index(remoteuri, "/")]
-		remoteuri = remoteuri[strings.Index(remoteuri, "/"):]
-		f.Path = remoteuri
-
+		if strings.Contains(remoteuri, "/") {
+			f.User = remoteuri[:strings.Index(remoteuri, "/")]
+		}
+		if strings.Contains(remoteuri, "/") {
+			remoteuri = remoteuri[strings.Index(remoteuri, "/"):]
+			f.Path = remoteuri
+		}
+		return
 	}
 
 	return
