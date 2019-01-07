@@ -46,8 +46,10 @@ func Folderlist(prepath string, folder *model.Folder, fs ...model.Object4dFile) 
 		panic("folder==nil")
 	}
 	for _, f := range fs {
+
 		childpath := f.Path[len(prepath):]
 		if strings.Contains(childpath, "/") {
+
 			foldername := childpath[:strings.Index(childpath, "/")]
 			if folder.Childfolder == nil {
 				folder.Childfolder = make(map[string]*model.Folder)
@@ -55,6 +57,7 @@ func Folderlist(prepath string, folder *model.Folder, fs ...model.Object4dFile) 
 			folder.Childfolder[foldername] = (new(model.Folder))
 			Folderlist(prepath+"/"+foldername, folder.Childfolder[foldername], f)
 		} else {
+			f.Name = childpath
 			folder.Files = append(folder.Files, f)
 		}
 	}

@@ -11,6 +11,7 @@ var (
 	APPConfig config.Config = config.Config{
 		HttpPort: 9003,
 		FsPort:   9002,
+		Appport:  9004,
 		Mysql:    "",
 		Object4d: []string{},
 		Dist:     "dist",

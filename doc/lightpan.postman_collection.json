@@ -16,15 +16,10 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://47.107.102.188:9003/user",
-							"protocol": "http",
+							"raw": "{{mhost}}/user",
 							"host": [
-								"47",
-								"107",
-								"102",
-								"188"
+								"{{mhost}}"
 							],
-							"port": "9003",
 							"path": [
 								"user"
 							]
@@ -33,7 +28,7 @@
 					"response": []
 				},
 				{
-					"name": "创建用户",
+					"name": "注册用户",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -44,20 +39,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":\"timeloveboy\",\n\t\"name\":\"李鹏\",\n\t\"password\":\"000666\"\n}"
+							"raw": "{\n\t\"id\":\"test\",\n\t\"name\":\"tttt\",\n\t\"password\":\"123456\"\n}"
 						},
 						"url": {
-							"raw": "http://47.107.102.188:9003/user",
-							"protocol": "http",
+							"raw": "{{mhost}}/regist",
 							"host": [
-								"47",
-								"107",
-								"102",
-								"188"
+								"{{mhost}}"
 							],
-							"port": "9003",
 							"path": [
-								"user"
+								"regist"
 							]
 						}
 					},
@@ -101,18 +91,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":\"timeloveboy\",\n\t\"password\":\"abc014916\"\n}"
+							"raw": "{\n\t\"id\":\"test\",\n\t\"password\":\"123456\"\n}"
 						},
 						"url": {
-							"raw": "http://47.107.102.188:9003/login",
-							"protocol": "http",
+							"raw": "{{mhost}}/login",
 							"host": [
-								"47",
-								"107",
-								"102",
-								"188"
+								"{{mhost}}"
 							],
-							"port": "9003",
 							"path": [
 								"login"
 							]
@@ -459,20 +444,14 @@
 							"file": {}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:3001/timeloveboy/fsj/jpg/teamview.conf",
-							"protocol": "http",
+							"raw": "{{fhost}}/timeloveboy/jjdbf/3.png",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{fhost}}"
 							],
-							"port": "3001",
 							"path": [
 								"timeloveboy",
-								"fsj",
-								"jpg",
-								"teamview.conf"
+								"jjdbf",
+								"3.png"
 							]
 						}
 					},
@@ -490,20 +469,37 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://127.0.0.1:3001/timeloveboy/fsj/jpg/teamview.conf",
-							"protocol": "http",
+							"raw": "{{fhost}}/timeloveboy/",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{fhost}}"
 							],
-							"port": "3001",
 							"path": [
 								"timeloveboy",
-								"fsj",
-								"jpg",
-								"teamview.conf"
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "webapp",
+			"description": "",
+			"item": [
+				{
+					"name": "前端主页",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{ahost}}/test.html",
+							"host": [
+								"{{ahost}}"
+							],
+							"path": [
+								"test.html"
 							]
 						}
 					},
