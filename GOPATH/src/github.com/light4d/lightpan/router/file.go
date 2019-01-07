@@ -143,7 +143,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Code:  -1,
 		}
 		log.Warn(log.Fields{
-			"error": err.Error(),
+			"error": om.NewErr("path already exist  a folder"),
 		})
 		Endresp(result, resp)
 		return
