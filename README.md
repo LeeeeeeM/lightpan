@@ -14,7 +14,8 @@
 + [快速安装](doc/快速安装.md)
 
 ## 加入开发
-+ [搭建开发环境](doc/搭建开发环境.md)
++ [搭建后端开发环境](doc/后端开发.md)
++ [搭建前端开发环境](doc/前端开发.md)
 
 ## 贡献者
 + [timeloveboy](https://github.com/timeloveboy/)
