@@ -14,7 +14,7 @@ var (
 		Appport:  9004,
 		Mysql:    "",
 		Object4d: []string{},
-		Dist:     "dist",
+		Dist:     "",
 	}
 )
 
