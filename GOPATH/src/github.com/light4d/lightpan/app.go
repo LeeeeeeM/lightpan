@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	log.Setlogfile("lightpan.log")
 	log.Info(log.Fields{"app": "exec args", "args": os.Args})
 
