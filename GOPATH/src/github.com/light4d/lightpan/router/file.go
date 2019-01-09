@@ -14,8 +14,10 @@ import (
 	"github.com/gobestsdk/gobase/log"
 	"io/ioutil"
 
+	"fmt"
 	"github.com/light4d/lightpan/fservice"
 	"github.com/light4d/object4d/common/server"
+	"strings"
 	"time"
 )
 
@@ -36,8 +38,8 @@ func file(resp http.ResponseWriter, req *http.Request) {
 func file_get(resp http.ResponseWriter, req *http.Request) {
 	result := om.CommonResp{}
 	uid := getuid(req)
-	f := model.ParseFile(req.RequestURI)
-	access, err := fservice.CheckVistorAccess(uid, f)
+	f := model.ParseFile(req.URL.Path)
+	access, pubonly, err := fservice.CheckReadAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -57,7 +59,7 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	f4d, folder, err := fservice.GetFile(f)
+	f4d, folder, err := fservice.GetFile(f, pubonly)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -70,7 +72,8 @@ func file_get(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if f4d != nil {
-		http.Redirect(resp, req, "http://"+ls.APPConfig.RandomElement()+"/"+f4d.Object4d, 303)
+		BridgePost(f4d, req, resp)
+
 		return
 	}
 	if folder != nil {
@@ -92,9 +95,9 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	query := httpserver.Getfilter(req)
-	f := model.ParseFile(req.RequestURI)
+	f := model.ParseFile(req.URL.Path)
 
-	access, err := fservice.CheckVistorAccess(uid, f)
+	access, pubonly, err := fservice.CheckWriteAccess(uid, f)
 
 	if err != nil {
 		result.Code = -1
@@ -124,7 +127,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		Endresp(result, resp)
 		return
 	}
-	f4d, folder, err := fservice.GetFile(f)
+	f4d, folder, err := fservice.GetFile(f, pubonly)
 	if err != nil {
 		result.Code = -1
 		result.Error = err.Error()
@@ -140,7 +143,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 			Code:  -1,
 		}
 		log.Warn(log.Fields{
-			"error": err.Error(),
+			"error": om.NewErr("path already exist  a folder"),
 		})
 		Endresp(result, resp)
 		return
@@ -156,7 +159,7 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 
 		f4d = &model.Object4dFile{
-			User:       f.User,
+			User:       f.Who,
 			Path:       f.Path,
 			Pub:        pub,
 			Createtime: time.Now(),
@@ -198,29 +201,43 @@ func file_post(resp http.ResponseWriter, req *http.Request) {
 		}
 	}
 	{
-
-		client := &http.Client{}
-		url := "http://" + ls.APPConfig.RandomElement() + "/" + f4d.Object4d
-		req, err := http.NewRequest("POST", url, req.Body)
-		req.Header.Add("Content-Type", "application/octet-stream")
-		req.Header.Add(oc.Ctype, ContentType(f.Path))
-		redrictresp, err := client.Do(req)
-
-		if err != nil {
+		if err = BridgePost(f4d, req, resp); err != nil {
 			result.Code = -1
 			result.Error = err.Error()
 			log.Warn(log.Fields{
 				"err": err.Error(),
-				"url": url,
 			})
 			Endresp(result, resp)
-			return
 		}
 
-		rrbs, _ := ioutil.ReadAll(redrictresp.Body)
-		resp.Write(rrbs)
 	}
 
+}
+
+//Bridge 转发http流量
+func BridgePost(f4d *model.Object4dFile, oreq *http.Request, resp http.ResponseWriter) (err error) {
+	client := &http.Client{}
+	url := "http://" + ls.APPConfig.RandomElement() + "/" + f4d.Object4d
+	req, err := http.NewRequest(oreq.Method, url, oreq.Body)
+	if oreq.Method == "POST" {
+		req.Header.Add("Content-Type", "application/octet-stream")
+		req.Header.Add(oc.Ctype, ContentType(f4d.Path))
+	}
+
+	redrictresp, err := client.Do(req)
+
+	if err != nil {
+		return
+	}
+	fmt.Println(redrictresp.Header)
+	for k, v := range redrictresp.Header {
+
+		resp.Header().Set(k, strings.Join(v, ","))
+	}
+
+	rrbs, _ := ioutil.ReadAll(redrictresp.Body)
+	resp.Write(rrbs)
+	return
 }
 func file_delete(resp http.ResponseWriter, req *http.Request) {
 

@@ -1,6 +1,7 @@
 {
   "http_port":9003,
   "fs_port":9002,
+  "app_port":9004,
 
   "mysql":"root:123456@tcp(localhost:3306)/lightpan?charset=utf8mb4&parseTime=true",
   "redis":{

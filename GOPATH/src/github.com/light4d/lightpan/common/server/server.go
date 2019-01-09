@@ -7,9 +7,9 @@ import (
 const Appname = "lightpan"
 
 var (
-	M = httpserver.New("lightpan manager")
-	F = httpserver.New("lightpan file system")
-	A = httpserver.New("lightpan app")
+	M = httpserver.New("lightpan_manager")
+	F = httpserver.New("lightpan_file_system")
+	A = httpserver.New("lightpan_app")
 )
 
 func Run() {
