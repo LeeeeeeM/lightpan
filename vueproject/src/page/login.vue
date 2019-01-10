@@ -60,8 +60,8 @@
 
       return {
         loginForm: {
-          id: 'timeloveboy',
-          password: 'abc014916'
+          id: '',
+          password: ''
         },
         loginRules:rules,
         loading: false,
