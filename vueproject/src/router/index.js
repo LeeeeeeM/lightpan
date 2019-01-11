@@ -16,10 +16,10 @@ export default new Router({
     {path:'/login',component:login},
     {path: '/404', component: () => import('@/page/404')},
     {path:'/upload',component:upload},
-    {path:"/home",component:home,meta:{auth:true},children:[
-        {path:'',meta:{auth:true},component:list},
-        {path:'/list',mate:{auth:true},component:list},
-        {path:'/up',mate:{auth:true},component:up},
+    {path:"/home",component:home,children:[
+        {path:'',component:list},
+        {path:'/home/list',component:list},
+        {path:'/home/up',component:up},
       ]},
     {path: '*', redirect: '/404'}
   ],

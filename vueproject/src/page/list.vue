@@ -2,7 +2,7 @@
   <div class="conmentContainer">
        <div class="ListHead">
           <div>
-            <el-button type="primary" icon="el-icon-upload" size="small">上传</el-button>
+            <el-button type="primary" icon="el-icon-upload" @click="openFileUpAlert" size="small">上传</el-button>
             <el-button type="primary" icon="el-icon-circle-plus" size="small">新建文件夹</el-button>
             <el-button-group v-show="multipleSelection.length>0">
               <el-button type="primary" icon="el-icon-share" size="small">分享</el-button>
@@ -11,7 +11,6 @@
               <el-button type="primary" size="small">重命名</el-button>
               <el-button type="primary" size="small">复制到</el-button>
               <el-button type="primary" size="small">移动到</el-button>
-
             </el-button-group>
           </div>
          <div style="position: relative">
@@ -25,8 +24,8 @@
            <a @click="back()" class="navback" v-show="navList.length>1">返回上一级</a>
            <el-breadcrumb separator="/">
              <el-breadcrumb-item v-for="(item,i) in navList" :key="i">
-               <a v-if="i!=(navList.length-1)">{{item.name}}</a>
-               <span v-else>{{item.name}}</span>
+               <a v-if="i!=(navList.length-1)" >{{item.Name}}</a>
+               <span v-else>{{item.Name}}</span>
              </el-breadcrumb-item>
            </el-breadcrumb>
          </div>
@@ -54,8 +53,9 @@
              >
              <template slot-scope="scope">
                <div class="rowimg">
-                 <img src="@/css/img/dir.png" alt="">
-                 {{scope.row.name}}
+                 <img v-if="!scope.row.isFile" src="@/css/img/dir.png" alt="">
+                 <img v-if="scope.row.isFile" src="@/css/img/file.png" alt="">
+                 {{scope.row.Name}}
                </div>
              </template>
            </el-table-column>
@@ -65,9 +65,9 @@
              width="80">
            </el-table-column>
            <el-table-column
-             prop="date"
+             prop="Createtime"
              label="日期"
-             width="150"
+             width="180"
              show-overflow-tooltip>
            </el-table-column>
            <el-table-column
@@ -93,33 +93,37 @@
            </el-table-column>
          </el-table>
        </div>
-
+    <fileUp :path="path" ref="fileUpAlert"></fileUp>
   </div>
 </template>
 
 <script>
+  import fileUp from "@/components/fileUp/fileUp"
+  import {getFile} from "../api/up";
+
   export default {
+    components:{
+      fileUp
+    },
+    computed:{
+      // path(){
+      //   return
+      // }
+    },
+    mounted(){
+     this.loadFile('/')
+    },
     data() {
       return {
+        path:"/wujun/test",
         tableData: [
-          {
-            name:"java学习",
-            size:"50M",
-            date:"2017-1-1 19:2:2",
-            path:""
-          },
-          {
-            name:"java学习2",
-            size:"50M",
-            date:"2017-1-1 19:2:2",
-            path:""
-          }
+
        ],
         multipleSelection: [],
         navList:[
           {
-            name:"全部文件",
-            path:"/"
+            Name:"全部文件",
+            Path:"/"
           }
         ]
       }
@@ -130,11 +134,15 @@
         this.multipleSelection = val;
       },
       RowClick(row){
-        this.$message('刷新表格数据');
-        this.navList.push({
-           name:row.name,
-           path:""
-        })
+        if(!row.isFile){
+          var Path=row.Path
+          this.loadFile(Path);
+          this.navList.push({
+            name:row.Name,
+            Path:Path
+          })
+        }
+
       },
       back(){
         if( this.navList.length>1){
@@ -146,6 +154,30 @@
             type: 'warning'
           });
         }
+      },
+      openFileUpAlert(){
+        this.$refs.fileUpAlert.show=true;
+      },
+      loadFile(path){
+        var _this=this;
+        getFile(path).then(res=>{
+          console.log(res);
+          _this.tableData=[];
+         var files= res.Result.Files;
+          var Childfolder= res.Result.Childfolder;
+            for(var key in Childfolder){
+              _this.tableData.push({
+                Name:key,
+                Path:"/"+key+"/",
+                isFile:false
+              })
+            }
+            for(var i in files){
+              var  json=files[i];
+              json.isFile=true
+              _this.tableData.push(json)
+            }
+        })
       }
     }
   }

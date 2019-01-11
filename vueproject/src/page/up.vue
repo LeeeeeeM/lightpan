@@ -39,14 +39,14 @@ export default {
         if (file.length === 0) {
           return
         }
-        let reader = new FileReader()
-        reader.readAsArrayBuffer(file[0])
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(file.files[0])
         reader.onload = function (e) {
           console.log('文件内容')
           console.log(e.target.result)
-          postfile("timeloveboy","folder",e.target.name,e.target.result)
+          postfile("wujun","test",e.target.name,e.target.result)
         }
- 
+
     }
   },
 }

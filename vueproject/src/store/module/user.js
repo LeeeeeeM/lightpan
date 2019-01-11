@@ -1,12 +1,14 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken ,setName,removeName} from '@/utils/auth'
 
 const user = {
   state: {
-    token: getToken(),
+    token:getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    FileUrl:"http://47.107.102.188:9002",
+    CommontUrl:"http://47.107.102.188:9003"
   },
 
   mutations: {
@@ -31,7 +33,8 @@ const user = {
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
            const tokenStr = response.Result.Token
-          setToken(tokenStr)
+          setToken(tokenStr);
+          setName(username)
           commit('SET_TOKEN', tokenStr)
           resolve()
         }).catch(error => {
@@ -84,8 +87,9 @@ const user = {
 
       return new Promise((resolve, reject) => {
             commit('SET_TOKEN', '')
-            commit('SET_ROLES', [])
+            //commit('SET_ROLES', [])
             removeToken()
+            removeName()
             resolve()
       })
     },
@@ -95,6 +99,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()
+        removeName()
         resolve()
       })
     }

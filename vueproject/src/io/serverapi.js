@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const mhost = 'http://127.0.0.1:9003/';
 export const fhost = 'http://127.0.0.1:9002/';
-
+import { getToken } from '@/utils/auth'
 
 
 function $fetch(method,url,data){
@@ -12,7 +12,7 @@ function $fetch(method,url,data){
             method,
             url,
             headers:{
-                'token':token,
+                'token':getToken(),
             },
             mode:'cors',
             data:data,
