@@ -1,26 +1,26 @@
 <template>
     <div class="main">
          <div class="head">
-                <div class="headleft">
-                  <div class="titleBox">
-                    <div class="title">
-                      <i class="icon iconfont icon-wangpanjihuo" style="font-size: 40px"></i>
-                      <span style="font-size: 24px">LightPan</span>
-                    </div>
-                    <!--<div style="font-size: 18px;cursor: pointer" @click="openflag=!openflag" :title="openflag?'展开':'关闭'" :class="{'icon':true,'iconfont':true,'icon-zhankai':openflag,'icon-shouqi':!openflag}">-->
-
+                <!--<div class="headleft">-->
+                  <!--<div class="titleBox">-->
+                    <!--<div class="title">-->
+                      <!--<i class="icon iconfont icon-wangpanjihuo" style="font-size: 40px"></i>-->
+                      <!--<span style="font-size: 24px">LightPan</span>-->
                     <!--</div>-->
-                  </div>
-                  <div class="selctItemBox">
-                       <div class="selctItem selctItemActive">网盘</div>
-                    <div class="selctItem">分享</div>
-                    <el-badge :value="1"  type="primary">
-                      <div class="selctItem">找资源</div>
-                    </el-badge>
-                    <div class="selctItem">更多</div>
-                  </div>
-                </div>
-               <div class="user">
+                    <!--&lt;!&ndash;<div style="font-size: 18px;cursor: pointer" @click="openflag=!openflag" :title="openflag?'展开':'关闭'" :class="{'icon':true,'iconfont':true,'icon-zhankai':openflag,'icon-shouqi':!openflag}">&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                  <!--</div>-->
+                  <!--<div class="selctItemBox">-->
+                       <!--<div class="selctItem selctItemActive">网盘</div>-->
+                    <!--<div class="selctItem">分享</div>-->
+                    <!--<el-badge :value="1"  type="primary">-->
+                      <!--<div class="selctItem">找资源</div>-->
+                    <!--</el-badge>-->
+                    <!--<div class="selctItem">更多</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+               <div class="user" style="padding-left: 80px">
                  <img class="userimg" src="@/css/img/user.png" alt="">
                  <el-dropdown class="username" style="color:#409eff">
                        <span class="el-dropdown-link">

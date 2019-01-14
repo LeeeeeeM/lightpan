@@ -6,9 +6,8 @@ import { getToken } from '@/utils/auth'
 // 创建axios实例
 
 const serviceFile = axios.create({
-
-  // baseURL: process.env.BASE_API, // api的base_url
-  baseURL: "http://47.107.102.188:9002", // api的base_url
+  //baseURL: "http://47.107.102.188:9002", // api的base_url
+  baseURL: "http://10.8.98.53:9002", // api的base_url
   timeout: 15000 // 请求超时时间
 })
 
@@ -55,7 +54,6 @@ serviceFile.interceptors.response.use(
     }
   },
   error => {
-     alert(1)
     console.log('err' + error)// for debug
     Message({
       message: error.message,

@@ -24,7 +24,7 @@
            <a @click="back()" class="navback" v-show="navList.length>1">返回上一级</a>
            <el-breadcrumb separator="/">
              <el-breadcrumb-item v-for="(item,i) in navList" :key="i">
-               <a v-if="i!=(navList.length-1)" >{{item.Name}}</a>
+               <a v-if="i!=(navList.length-1)" @click="toNav(i,item.Name,item.Path)">{{item.Name}}</a>
                <span v-else>{{item.Name}}</span>
              </el-breadcrumb-item>
            </el-breadcrumb>
@@ -100,22 +100,22 @@
 <script>
   import fileUp from "@/components/fileUp/fileUp"
   import {getFile} from "../api/up";
-
+  import { getName } from '@/utils/auth'
   export default {
     components:{
       fileUp
     },
     computed:{
-      // path(){
-      //   return
-      // }
+      url(){
+        return this.$store.state.user.FileUrl
+      },
     },
     mounted(){
      this.loadFile('/')
     },
     data() {
       return {
-        path:"/wujun/test",
+        path:"/",
         tableData: [
 
        ],
@@ -138,16 +138,20 @@
           var Path=row.Path
           this.loadFile(Path);
           this.navList.push({
-            name:row.Name,
+            Name:row.Name,
             Path:Path
           })
+        }else{
+          window.open(this.url+"/"+getName()+row.Path);
         }
 
       },
       back(){
         if( this.navList.length>1){
-          this.$message('返回成功，刷新表格');
-          this.navList.pop()
+          this.navList.pop();
+          var Path=this.navList[this.navList.length-1].Path;
+          this.loadFile(Path);
+
         }else{
           this.$message({
             message: '已经是根目录了！',
@@ -156,6 +160,10 @@
         }
       },
       openFileUpAlert(){
+        var _this=this;
+        var Path=this.navList[this.navList.length-1].Path;
+        _this.path=this.url+"/"+getName()+Path;
+        console.log(_this.path);
         this.$refs.fileUpAlert.show=true;
       },
       loadFile(path){
@@ -178,6 +186,15 @@
               _this.tableData.push(json)
             }
         })
+      },
+      toNav(index,Name,Path){
+       var _this=this;
+        var data=Object.assign([],_this.navList);
+        var length=data.length;
+        data.splice(index+1,length);
+        _this.navList=data;
+        _this.loadFile(Path);
+
       }
     }
   }

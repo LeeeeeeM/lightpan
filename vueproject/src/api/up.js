@@ -16,3 +16,5 @@ export function getFile(path) {
     method: 'get',
   })
 }
+
+
