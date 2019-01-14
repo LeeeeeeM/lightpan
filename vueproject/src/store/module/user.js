@@ -7,10 +7,10 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    // FileUrl:"http://47.107.102.188:9002",
-    // CommontUrl:"http://47.107.102.188:9003"
-    FileUrl:"http://10.8.98.53:9002",
-    CommontUrl:"http://10.8.98.53:9003"
+    FileUrl:"http://47.107.102.188:9002",
+    CommontUrl:"http://47.107.102.188:9003"
+   // FileUrl:"http://10.8.98.53:9002",
+    //CommontUrl:"http://10.8.98.53:9003"
 
   },
 
